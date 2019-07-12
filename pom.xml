@@ -12,11 +12,10 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<!-- cdc (6/27/2019): These are new. They are required to compile this on newer versions of the JDK.
-			It would be fine to use an older source and target, such as 8, as well.
+		<!-- cdc (6/27/2019): These lines are new. They are required to compile this on newer versions of the JDK.
 			See: https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html -->
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
 	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<checkstyle.version>[8.18,)</checkstyle.version>
