@@ -25,6 +25,8 @@ Type on the command line:
 mvn clean compile
 ```
 
+* Test
+
 # How to create a binary runnable package 
 
 
