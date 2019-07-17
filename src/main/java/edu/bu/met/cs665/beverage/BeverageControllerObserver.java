@@ -23,7 +23,7 @@ public interface BeverageControllerObserver {
   
   /**
    * Called when the observed controller completes an order.
-   * @param controller the controller that copmleted an order.
+   * @param controller the controller that completed an order.
    */
   void onOrderCompleted(BeverageController controller);
 }

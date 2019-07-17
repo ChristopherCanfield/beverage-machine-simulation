@@ -11,10 +11,10 @@ public class BeverageController {
     MAKING_DRINK
   }
   
-  private State state;
+  private State state = State.READY;
   
   // While an array list would be a logical choice here, I used a hashset to prevent an observer 
-  // from being stored notified multiple times.
+  // from being stored and notified multiple times.
   private Set<BeverageControllerObserver> observers = new HashSet<>();
   
   /**
@@ -50,7 +50,10 @@ public class BeverageController {
     notifyObservers(observer -> observer.onStateChanged(this, newState));
   }
   
-  public void makeBeverage() {
+  public void submitOrder() {
+    notifyObservers(observer -> observer.onOrderReceived(this));
     changeState(State.MAKING_DRINK);
+    
+    // TODO (2019-07-17): Implement this.
   }
 }
