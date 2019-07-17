@@ -18,4 +18,14 @@ public class TrackingBeverageControllerObserver implements BeverageControllerObs
   public void onStateChanged(BeverageController controller, State newState) {
     onStateChangedCalled = true;
   }
+  
+  @Override
+  public void onOrderReceived(BeverageController controller) {
+    
+  }
+  
+  @Override
+  public void onOrderCompleted(BeverageController controller) {
+    
+  }
 }
