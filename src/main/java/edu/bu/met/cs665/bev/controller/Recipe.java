@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
-import edu.bu.met.cs665.bev.Condiment;
 
 public class Recipe {
   private final String hardwareCommand;
