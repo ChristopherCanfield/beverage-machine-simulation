@@ -24,16 +24,16 @@ import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 
-public class App extends Component implements MouseListener, KeyListener, BeverageControllerObserver  {
+public class GuiApp extends Component implements MouseListener, KeyListener, BeverageControllerObserver  {
   private static final long serialVersionUID = 1L;
   
-  private static final Logger logger = Logger.getLogger(App.class);
+  private static final Logger logger = Logger.getLogger(GuiApp.class);
 
   public static void main(String[] args) {
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        App app = new App();
+        GuiApp app = new GuiApp();
         app.start();
       }});
   }
@@ -153,6 +153,8 @@ public class App extends Component implements MouseListener, KeyListener, Bevera
     logger.info("Beverage is ready");
     SwingUtilities.invokeLater(() -> {
       currentImage = automaticBeverageMachineImageWithCoffee;
+      
+      // Redraw the image.
       repaint();
       revalidate();
     });
