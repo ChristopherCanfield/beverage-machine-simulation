@@ -1,8 +1,11 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.controller;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import edu.bu.met.cs665.bev.controller.BeverageController;
+import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
+import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 
 public class BeverageControllerTest {
 

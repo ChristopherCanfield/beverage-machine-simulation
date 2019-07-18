@@ -1,6 +1,7 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.hardware;
 
 import java.util.concurrent.Future;
+import edu.bu.met.cs665.bev.controller.Recipe;
 
 /**
  * An interface into the brewing hardware.

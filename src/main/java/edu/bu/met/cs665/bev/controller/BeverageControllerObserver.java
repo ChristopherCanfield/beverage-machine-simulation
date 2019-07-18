@@ -1,4 +1,4 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.controller;
 
 /**
  * BeverageControllerObservers can receive notifications from BeverageControllers when various 

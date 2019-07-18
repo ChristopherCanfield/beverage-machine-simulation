@@ -1,6 +1,8 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.controller;
 
-import edu.bu.met.cs665.beverage.BeverageController.State;
+import edu.bu.met.cs665.bev.controller.BeverageController;
+import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
+import edu.bu.met.cs665.bev.controller.BeverageController.State;
 
 /**
  * A beverage controller that tracks whether it has received notifications.

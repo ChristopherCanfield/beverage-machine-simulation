@@ -1,4 +1,4 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.hardware;
 
 import org.junit.Test;
 

@@ -1,9 +1,10 @@
-package edu.bu.met.cs665.beverage;
+package edu.bu.met.cs665.bev.controller;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.apache.commons.lang.NotImplementedException;
+import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 
 public class BeverageController {
   
