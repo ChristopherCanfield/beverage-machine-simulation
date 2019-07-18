@@ -3,7 +3,7 @@ package edu.bu.met.cs665.bev.controller;
 public class GreenTeaBeverage extends TeaBeverage {
   private final Recipe recipe;
   
-  protected GreenTeaBeverage() {
+  public GreenTeaBeverage() {
     super("Green Tea");
     
     Recipe.Builder rb = new Recipe.Builder();

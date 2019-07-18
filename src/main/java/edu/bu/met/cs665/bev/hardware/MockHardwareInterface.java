@@ -1,10 +1,12 @@
 package edu.bu.met.cs665.bev.hardware;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import java.time.Instant;
+import java.util.Deque;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.lang.NotImplementedException;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -20,6 +22,8 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   private final int delayMilliseconds;
   private final ListeningScheduledExecutorService executor = MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor());
   
+  private final Deque<Recipe> orders = new LinkedBlockingDeque<>();
+  
   /**
    * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to simulate
    * the time it takes to make a drink.
@@ -33,12 +37,14 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   
   @Override
   public ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe) {
+    orders.push(recipe);
     return executor.schedule(this, delayMilliseconds, TimeUnit.MILLISECONDS);
   }
 
   @Override
   public CompletedOrder call() throws Exception {
-    throw new NotImplementedException();
+    Recipe recipe = orders.pop();
+    return new CompletedOrder(this, recipe, Instant.now());
   }
 
 }

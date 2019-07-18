@@ -1,7 +1,8 @@
 package edu.bu.met.cs665.bev.controller;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import com.google.common.util.concurrent.FutureCallback;
@@ -25,7 +26,9 @@ public class BeverageController implements FutureCallback<CompletedOrder> {
   
   // While an array list would be a logical choice here, I used a hashset to prevent an observer 
   // from being stored and notified multiple times.
-  private Set<BeverageControllerObserver> observers = new HashSet<>();
+  // This is thread-safe, because the HardwareInterface may cause events that are reported on other threads.
+  private Set<BeverageControllerObserver> observers = Collections.newSetFromMap(
+      new ConcurrentHashMap<BeverageControllerObserver, Boolean>());
   
   
   /**
@@ -106,11 +109,13 @@ public class BeverageController implements FutureCallback<CompletedOrder> {
   @Override
   public void onSuccess(@Nullable CompletedOrder result) {
     notifyObservers(observer -> observer.onOrderCompleted(this, result));
+    changeState(State.READY);
   }
 
   @Override
   public void onFailure(Throwable t) {
     notifyObservers(observer -> observer.onOrderFailed(this, t));
+    changeState(State.READY);
   }
   
   

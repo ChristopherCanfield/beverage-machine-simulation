@@ -31,14 +31,15 @@ public interface BeverageControllerObserver {
   void onTooManyCondimentsOrdered(BeverageController controller, String message);
   
   /**
-   * Called when the observed controller completes an order.
+   * Called when the observed controller completes an order. This may be called on a thread other 
+   * than the main thread.
    * @param controller the controller that completed an order.
    * @param completedOrder the completed order info.
    */
   void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder);
   
   /**
-   * Called when the order has failed.
+   * Called when the order has failed. This may be called on a thread other the main thread.
    * @param controller the controller that received the order.
    * @param throwable a throwable representing the failure.
    */

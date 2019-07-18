@@ -50,4 +50,26 @@ public class BeverageOrder {
     
     return rb.build();
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(beverage.name());
+    
+    if (!(condiments.isEmpty())) {
+      boolean firstCondiment = true;
+      for (Condiment condiment : condiments) {
+        if (firstCondiment) {
+          sb.append(" with ");
+          sb.append(condiment);
+          firstCondiment = false;
+        } else {
+          sb.append(", ");
+          sb.append(condiment.name());
+        }
+      }
+    }
+    
+    return sb.toString();
+  }
 }

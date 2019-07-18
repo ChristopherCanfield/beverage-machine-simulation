@@ -3,7 +3,7 @@ package edu.bu.met.cs665.bev.controller;
 public class LatteMachiatoBeverage extends CoffeeBeverage {
   private final Recipe recipe;
   
-  protected LatteMachiatoBeverage() {
+  public LatteMachiatoBeverage() {
     super("Latte Machiato");
     
     Recipe.Builder rb = new Recipe.Builder();
