@@ -4,6 +4,7 @@ edu/bu/met/cs665/bev/controller/Beverage.class
 edu/bu/met/cs665/bev/controller/YellowTeaBeverage.class
 edu/bu/met/cs665/bev/controller/ParameterizedCondiment.class
 edu/bu/met/cs665/bev/controller/BeverageControllerObserver.class
+edu/bu/met/cs665/App.class
 edu/bu/met/cs665/bev/controller/SugarCondiment.class
 edu/bu/met/cs665/Main.class
 edu/bu/met/cs665/bev/hardware/MockHardwareInterface.class
@@ -17,11 +18,11 @@ edu/bu/met/cs665/bev/controller/ParameterizedBeverage.class
 edu/bu/met/cs665/bev/controller/Recipe.class
 edu/bu/met/cs665/bev/hardware/HardwareInterface.class
 edu/bu/met/cs665/bev/controller/Recipe$Builder.class
-edu/bu/met/cs665/bev/hardware/MockHardwareInterface$1.class
 edu/bu/met/cs665/bev/controller/Condiment.class
 edu/bu/met/cs665/bev/controller/BeverageController$State.class
 edu/bu/met/cs665/bev/controller/MilkCondiment.class
 edu/bu/met/cs665/bev/hardware/CompletedOrder.class
 edu/bu/met/cs665/bev/controller/EspressoBeverage.class
+edu/bu/met/cs665/App$1.class
 edu/bu/met/cs665/bev/controller/GreenTeaBeverage.class
 edu/bu/met/cs665/bev/controller/BlackTeaBeverage.class
