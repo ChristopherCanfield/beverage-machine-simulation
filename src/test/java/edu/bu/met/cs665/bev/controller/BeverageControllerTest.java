@@ -17,11 +17,15 @@ public class BeverageControllerTest {
   
   @Test
   public void state_initial() {
-    
+    assertEquals(BeverageController.State.READY, controller.state());
   }
   
-  @Test void state_whileBrewing() {
+  @Test 
+  public void state_whileBrewing() {
+    assertEquals(BeverageController.State.READY, controller.state());
     
+    controller.submitOrder();
+    assertEquals(BeverageController.State.MAKING_DRINK, controller.state());
   }
   
   @Test
