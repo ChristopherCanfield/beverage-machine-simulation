@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class App extends Component implements MouseListener, KeyListener  {
+  private static final long serialVersionUID = 1L;
+
   public static void main(String[] args) {
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
       @Override
