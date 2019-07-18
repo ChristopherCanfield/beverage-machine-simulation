@@ -11,7 +11,7 @@ public class BeverageControllerTest {
   
   @Before
   public void beforeEach() {
-    controller = new BeverageController(new MockHardwareInterface());
+    controller = new BeverageController(new MockHardwareInterface(200));
   }
   
   
