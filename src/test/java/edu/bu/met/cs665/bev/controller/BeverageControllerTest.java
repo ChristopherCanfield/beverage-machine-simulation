@@ -7,13 +7,14 @@ import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 
 public class BeverageControllerTest {
 
+  private MockHardwareInterface hardwareInterface;
   private BeverageController controller;
   
   @Before
   public void beforeEach() {
-    controller = new BeverageController(new MockHardwareInterface(200));
+    hardwareInterface = new MockHardwareInterface(200);
+    controller = new BeverageController(hardwareInterface);
   }
-  
   
   @Test
   public void state_initial() {

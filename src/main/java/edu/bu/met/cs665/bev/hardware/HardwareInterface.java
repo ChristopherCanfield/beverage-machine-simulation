@@ -16,4 +16,13 @@ public interface HardwareInterface {
    * @return a future that will contain the completed order, once the drink has been made.
    */
   ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe);
+  
+  /**
+   * Shuts down the hardware interface, and waits for any already submitted orders to be processed, 
+   * as long they can be completed before the timeoutMilliseconds expires.
+   * @param timeoutMilliseconds the maximum amount of time, in milliseconds, to wait for the orders to finish.
+   * @return true if all orders were processed, or false otherwise.
+   * @throws InterruptedException the thread was interrupted.
+   */
+  public boolean waitForCompletion(int timeoutMilliseconds) throws InterruptedException;
 }

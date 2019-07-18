@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
@@ -20,9 +21,22 @@ import edu.bu.met.cs665.bev.controller.Recipe;
  */
 public class MockHardwareInterface implements HardwareInterface, Callable<CompletedOrder> {
   private final int delayMilliseconds;
-  private final ListeningScheduledExecutorService executor = MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor());
+  private final ListeningScheduledExecutorService executor = createExecutorService();
   
   private final Deque<Recipe> orders = new LinkedBlockingDeque<>();
+  
+  private ListeningScheduledExecutorService createExecutorService() {
+    ThreadFactory tf = new ThreadFactory() {
+      @Override
+      public Thread newThread(Runnable r) {
+        Thread thread = new Thread(r, "HardwareInterface-thread");
+        thread.setDaemon(true);
+        return thread;
+      }};
+      
+      return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(tf));
+  }
+  
   
   /**
    * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to simulate
@@ -33,6 +47,13 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   public MockHardwareInterface(int makeRecipeDelayMilliseconds) {
     checkArgument(makeRecipeDelayMilliseconds >= 0, "The delay provided to the " + getClass().getSimpleName() + " must be >= 0.");
     this.delayMilliseconds = makeRecipeDelayMilliseconds;
+  }
+  
+  @Override
+  public boolean waitForCompletion(int timeoutMilliseconds) throws InterruptedException {
+    executor.shutdown();
+    executor.awaitTermination(timeoutMilliseconds, TimeUnit.MILLISECONDS);
+    return orders.isEmpty();
   }
   
   @Override

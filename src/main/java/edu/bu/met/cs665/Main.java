@@ -7,6 +7,7 @@ import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
 import edu.bu.met.cs665.bev.controller.BeverageOrder;
 import edu.bu.met.cs665.bev.controller.LatteMachiatoBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
+import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 
 public class Main implements BeverageControllerObserver {
@@ -20,13 +21,20 @@ public class Main implements BeverageControllerObserver {
    * @param args not used
    */
   public static void main(String[] args) {
+    logger.info("Main: Welcome to the BeverageController tests.");
+    
     Main main = new Main();
     main.testBeverageController();
+    
+    logger.info("Main: Exiting BeverageController tests.");
   }
   
   public void testBeverageController() {
+    logger.info("Main: Constructing the HardwareInterface");
+    HardwareInterface hardwareInterface = new MockHardwareInterface(20);
+    
     logger.info("Main: Constructing BeverageController");
-    BeverageController controller = new BeverageController(new MockHardwareInterface(5));
+    BeverageController controller = new BeverageController(hardwareInterface);
     logger.info("Main: Subscribing to BeverageController's events.");
     controller.addObserver(this);
     
@@ -36,6 +44,17 @@ public class Main implements BeverageControllerObserver {
     BeverageOrder order1 = new BeverageOrder(new LatteMachiatoBeverage());
     logger.info("Main: Submitting first order to BeverageController: " + order1.toString());
     controller.submitOrder(order1);
+    
+    logger.info("Main: Waiting for drinks to be made.");
+    try {
+      if (hardwareInterface.waitForCompletion(50)) {
+        logger.info("Main: All drinks made. Shutting down.");
+      } else {
+        logger.warn("Main: The drink orders are taking too long. Shutting down.");
+      }
+    } catch (InterruptedException e) {
+      logger.warn("Main: Thread interrupted. Shutting down.");
+    }
   }
 
 
