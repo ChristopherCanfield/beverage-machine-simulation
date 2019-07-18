@@ -26,15 +26,12 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   private final Deque<Recipe> orders = new LinkedBlockingDeque<>();
   
   private ListeningScheduledExecutorService createExecutorService() {
-    ThreadFactory tf = new ThreadFactory() {
-      @Override
-      public Thread newThread(Runnable r) {
-        Thread thread = new Thread(r, "HardwareInterface-thread");
-        thread.setDaemon(true);
-        return thread;
-      }};
-      
-      return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(tf));
+    ThreadFactory tf = r -> {
+      Thread thread = new Thread(r, "HardwareInterface-thread");
+      thread.setDaemon(true);
+      return thread;
+    };
+    return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(tf));
   }
   
   
