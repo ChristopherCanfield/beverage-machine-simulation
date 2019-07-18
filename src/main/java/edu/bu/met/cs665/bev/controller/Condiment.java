@@ -1,21 +1,20 @@
 package edu.bu.met.cs665.bev.controller;
 
-import java.util.Objects;
-
-public class Condiment {
-  private final String name;
-  private final String typeIndicator;
+/**
+ * The interface for beverage condiments.
+ * 
+ * @author Christopher D. Canfield
+ */
+public interface Condiment {
+  /**
+   * Returns the user-readable name of the condiment.
+   * @return the user-readable name of the condiment
+   */
+  String name();
   
-  protected Condiment(String name, String typeIndicator) {
-    this.name = Objects.requireNonNull(name);
-    this.typeIndicator = Objects.requireNonNull(typeIndicator);
-  }
-  
-  public String name() {
-    return name;
-  }
-  
-  String typeIndicator() {
-    return typeIndicator;
-  }
+  /**
+   * Returns the condiment's type indicator.
+   * @return the condiment's type indicator.
+   */
+  String typeIndicator();
 }

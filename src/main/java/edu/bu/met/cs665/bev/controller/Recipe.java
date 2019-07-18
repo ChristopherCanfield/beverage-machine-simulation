@@ -18,7 +18,7 @@ public class Recipe {
     sb.append(builder.temperatureFahrenheit);
     
     if (!builder.condiments.isEmpty()) {
-      for (Condiment condiment : builder.condiments) {
+      for (ParameterizedCondiment condiment : builder.condiments) {
         sb.append(":");
         sb.append(condiment.typeIndicator());
       }
@@ -56,7 +56,7 @@ public class Recipe {
     private String subtypeIndicator;
     private static final int INVALID_TEMP = -1000;
     private int temperatureFahrenheit = INVALID_TEMP;
-    private List<Condiment> condiments = new ArrayList<>();
+    private List<ParameterizedCondiment> condiments = new ArrayList<>();
 
     public Builder() {
     }
@@ -100,7 +100,7 @@ public class Recipe {
      * @param condiment the condiment to add.
      * @return reference to this builder.
      */
-    public Builder addCondiment(Condiment condiment) {
+    public Builder addCondiment(ParameterizedCondiment condiment) {
       condiments.add(requireNonNull(condiment));
       return this;
     }
