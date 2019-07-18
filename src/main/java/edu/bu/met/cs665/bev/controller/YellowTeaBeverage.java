@@ -1,15 +1,15 @@
 package edu.bu.met.cs665.bev.controller;
 
-public class GreenTea extends TeaBeverage {
+public class YellowTeaBeverage extends TeaBeverage {
   private final Recipe recipe;
   
-  protected GreenTea() {
-    super("Green Tea");
+  protected YellowTeaBeverage() {
+    super("Yellow Tea");
     
     Recipe.Builder rb = new Recipe.Builder();
     recipe = rb.setTypeIndicator(typeIndicator())
-      .setSubtypeIndicator("GT")
-      .setTemperatureFahrenheit(175)
+      .setSubtypeIndicator("YT")
+      .setTemperatureFahrenheit(170)
       .build();
   }
 

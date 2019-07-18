@@ -31,6 +31,21 @@ public class Recipe {
     return hardwareCommand;
   }
   
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Recipe)) {
+      return false;
+    }
+    
+    Recipe otherRecipe = (Recipe) other;
+    return hardwareCommand().equals(otherRecipe.hardwareCommand);
+  }
+  
+  @Override
+  public int hashCode() {
+    return hardwareCommand.hashCode();
+  }
+  
   /**
    * Used the construct a Recipe. Everything is required except condiments.
    * 

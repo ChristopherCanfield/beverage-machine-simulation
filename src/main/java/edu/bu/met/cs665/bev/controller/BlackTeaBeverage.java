@@ -1,9 +1,9 @@
 package edu.bu.met.cs665.bev.controller;
 
-public class BlackTea extends TeaBeverage {
+public class BlackTeaBeverage extends TeaBeverage {
   private final Recipe recipe;
   
-  protected BlackTea() {
+  protected BlackTeaBeverage() {
     super("Black Tea");
     
     Recipe.Builder rb = new Recipe.Builder();
