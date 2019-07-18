@@ -1,15 +1,15 @@
 package edu.bu.met.cs665.bev.controller;
 
-public class LatteMachiatoBeverage extends Beverage {
+public class LatteMachiatoBeverage extends CoffeeBeverage {
   private final Recipe recipe;
   
   protected LatteMachiatoBeverage() {
     super("Latte Machiato");
     
     Recipe.Builder rb = new Recipe.Builder();
-    recipe = rb.setTypeIndicator("C")
+    recipe = rb.setTypeIndicator(typeIndicator())
       .setSubtypeIndicator("LM")
-      .setTemperatureFahrenheit(200)
+      .setTemperatureFahrenheit(205)
       .build();
   }
 

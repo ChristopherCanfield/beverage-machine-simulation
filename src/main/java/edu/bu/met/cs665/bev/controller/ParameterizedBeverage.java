@@ -1,0 +1,26 @@
+package edu.bu.met.cs665.bev.controller;
+
+/**
+ * A beverage that allows its recipe and name values to be set. This trades a slight bit of type 
+ * safety for increased flexibility. For example, we can load beverage recipes from a text file or
+ * database, and construct a set of ParameterizedBeverages from it.
+ * 
+ * @author Christopher D. Canfield
+ */
+public class ParameterizedBeverage extends Beverage {
+  private final Recipe recipe;
+  
+  protected ParameterizedBeverage(String name, String typeIndicator, String subtypeIndicator, int temperatureFahrenheit) {
+    super(name);
+    
+    recipe = new Recipe.Builder().setTypeIndicator(typeIndicator)
+      .setSubtypeIndicator(subtypeIndicator)
+      .setTemperatureFahrenheit(temperatureFahrenheit)
+      .build();
+  }
+
+  @Override
+  Recipe recipe() {
+    return recipe;
+  }
+}
