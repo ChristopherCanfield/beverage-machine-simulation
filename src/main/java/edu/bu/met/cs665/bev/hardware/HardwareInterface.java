@@ -1,6 +1,6 @@
 package edu.bu.met.cs665.bev.hardware;
 
-import java.util.concurrent.Future;
+import com.google.common.util.concurrent.ListenableFuture;
 import edu.bu.met.cs665.bev.controller.Recipe;
 
 /**
@@ -15,5 +15,5 @@ public interface HardwareInterface {
    * @param recipe the recipe to make.
    * @return a future that will contain the completed order, once the drink has been made.
    */
-  Future<CompletedOrder> makeRecipe(Recipe recipe);
+  ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe);
 }

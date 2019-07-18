@@ -3,10 +3,17 @@ package edu.bu.met.cs665.bev.controller;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.apache.commons.lang.NotImplementedException;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
+import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 
-public class BeverageController {
+public class BeverageController implements FutureCallback<CompletedOrder> {
+  private static final int MAX_MILK = 3;
+  private static final int MAX_SUGAR = 3;
   
   public enum State {
     READY,
@@ -39,18 +46,74 @@ public class BeverageController {
   
   
   
-  public void submitOrder() {
-    notifyObservers(observer -> observer.onOrderReceived(this));
+  public void submitOrder(BeverageOrder order) {
+    notifyObservers(observer -> observer.onOrderReceived(this, order));
     changeState(State.MAKING_DRINK);
     
-    // TODO (2019-07-17): Implement this.
+    BeverageOrder verifiedOrder = verifyOrder(order);
     
-//    Future<CompletedOrder> completedOrderFuture = hardwareInterface.makeRecipe(recipe);
-    
-    throw new NotImplementedException();
+    ListenableFuture<CompletedOrder> orderFuture = hardwareInterface.makeRecipe(verifiedOrder.toRecipe());
+    Futures.addCallback(orderFuture, this, MoreExecutors.directExecutor());
   }
   
+  /**
+   * Ensures that the order does not exceed the maximum number of condiments. If the order does 
+   * exceed the max number of condiments, it alerts any observers to the problems, and creates a
+   * new order that is capped at the max condiments. Change this method when the maximum number of
+   * any condiment is changed.
+   * @param order the order sent to this controller.
+   * @return the original order, or a revised order, if necessary.
+   */
+  private BeverageOrder verifyOrder(BeverageOrder order) {
+    int milkOrder = 0;
+    int sugarOrder = 0;
     
+    for (Condiment condiment : order.condiments()) {
+      if (condiment instanceof MilkCondiment) {
+        milkOrder++;
+      } else if (condiment instanceof SugarCondiment) {
+        sugarOrder++;
+      }
+    }
+    
+    if (milkOrder > MAX_MILK || sugarOrder > MAX_SUGAR) {
+      int finalMilkOrder = Math.min(milkOrder, MAX_MILK);
+      int finalSugarOrder = Math.min(sugarOrder, MAX_SUGAR);
+      
+      String message = String.format("Too many condiments in order. Milk: %d; Sugar: %d. Adjusting order to %d milk & %d sugar.", 
+          milkOrder, sugarOrder, finalMilkOrder, finalSugarOrder);
+      notifyObservers(observer -> observer.onTooManyCondimentsOrdered(this, message));
+      
+      BeverageOrder revisedOrder = new BeverageOrder(order.beverage());
+      addCondimentsToOrder(revisedOrder, new MilkCondiment(), finalMilkOrder);
+      addCondimentsToOrder(revisedOrder, new SugarCondiment(), finalSugarOrder);
+      
+      return revisedOrder;
+    } else {
+      return order;
+    }
+  }
+  
+  private static void addCondimentsToOrder(BeverageOrder order, Condiment condiment, int count) {
+    for (int i = 0; i < count; i++) {
+      order.addCondiment(condiment);
+    }
+  }
+  
+  
+  //// Callbacks for hardware interface. ////
+  
+  @Override
+  public void onSuccess(@Nullable CompletedOrder result) {
+    notifyObservers(observer -> observer.onOrderCompleted(this, result));
+  }
+
+  @Override
+  public void onFailure(Throwable t) {
+    notifyObservers(observer -> observer.onOrderFailed(this, t));
+  }
+  
+  
   ////Observer functionality ////
     
   /**

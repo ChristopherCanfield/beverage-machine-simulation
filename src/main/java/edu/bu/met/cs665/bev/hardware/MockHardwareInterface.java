@@ -3,10 +3,11 @@ package edu.bu.met.cs665.bev.hardware;
 import static com.google.common.base.Preconditions.checkArgument;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.NotImplementedException;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import edu.bu.met.cs665.bev.controller.Recipe;
 
 /**
@@ -17,7 +18,7 @@ import edu.bu.met.cs665.bev.controller.Recipe;
  */
 public class MockHardwareInterface implements HardwareInterface, Callable<CompletedOrder> {
   private final int delayMilliseconds;
-  private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+  private final ListeningScheduledExecutorService executor = MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor());
   
   /**
    * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to simulate
@@ -31,7 +32,7 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   }
   
   @Override
-  public Future<CompletedOrder> makeRecipe(Recipe recipe) {
+  public ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe) {
     return executor.schedule(this, delayMilliseconds, TimeUnit.MILLISECONDS);
   }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BeverageOrder {
   private final Beverage beverage;
-  private final List<ParameterizedCondiment> condiments = new ArrayList<>();
+  private final List<Condiment> condiments = new ArrayList<>();
   
   public BeverageOrder(Beverage beverage) {
     this.beverage = requireNonNull(beverage);
@@ -18,7 +18,7 @@ public class BeverageOrder {
    * Adds the specified condiment to this order.
    * @param condiment the condiment to add.
    */
-  public void addCondiment(ParameterizedCondiment condiment) {
+  public void addCondiment(Condiment condiment) {
     requireNonNull(condiment);
     condiments.add(condiment);
   }
@@ -34,7 +34,20 @@ public class BeverageOrder {
    * Returns an unmodifiable collection of this order's condiments.
    * @return an unmodifiable collection of this order's condiments
    */
-  public Collection<ParameterizedCondiment> condiments() {
+  public Collection<Condiment> condiments() {
     return Collections.unmodifiableCollection(condiments);
+  }
+  
+  /**
+   * Returns a recipe that represents this beverage order.
+   */
+  Recipe toRecipe() {
+    Recipe.Builder rb = new Recipe.Builder(beverage.recipe());
+    
+    for (Condiment condiment : condiments) {
+      rb.addCondiment(condiment);
+    }
+    
+    return rb.build();
   }
 }

@@ -24,13 +24,16 @@ public class BeverageControllerTest {
   public void state_whileBrewing() {
     assertEquals(BeverageController.State.READY, controller.state());
     
-    controller.submitOrder();
+    BeverageOrder order = new BeverageOrder(new AmericanoBeverage());
+    controller.submitOrder(order);
     assertEquals(BeverageController.State.MAKING_DRINK, controller.state());
   }
   
   @Test
   public void makeBeverage() {
-    controller.submitOrder();
+    BeverageOrder order = new BeverageOrder(new AmericanoBeverage());
+    order.addCondiment(new MilkCondiment());
+    controller.submitOrder(order);
   }
   
   

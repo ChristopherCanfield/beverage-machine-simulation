@@ -9,7 +9,17 @@ import java.util.List;
 public class Recipe {
   private final String hardwareCommand;
   
+  private final String typeIndicator;
+  private final String subtypeIndicator;
+  private final int temperatureFahrenheit;
+  private final List<Condiment> condiments;
+  
   private Recipe(Recipe.Builder builder) {
+    typeIndicator = builder.typeIndicator;
+    subtypeIndicator = builder.subtypeIndicator;
+    temperatureFahrenheit = builder.temperatureFahrenheit;
+    condiments = builder.condiments;
+    
     StringBuilder sb = new StringBuilder();
     sb.append(builder.typeIndicator);
     sb.append(":");
@@ -18,7 +28,7 @@ public class Recipe {
     sb.append(builder.temperatureFahrenheit);
     
     if (!builder.condiments.isEmpty()) {
-      for (ParameterizedCondiment condiment : builder.condiments) {
+      for (Condiment condiment : builder.condiments) {
         sb.append(":");
         sb.append(condiment.typeIndicator());
       }
@@ -56,9 +66,20 @@ public class Recipe {
     private String subtypeIndicator;
     private static final int INVALID_TEMP = -1000;
     private int temperatureFahrenheit = INVALID_TEMP;
-    private List<ParameterizedCondiment> condiments = new ArrayList<>();
+    private List<Condiment> condiments = new ArrayList<>();
 
     public Builder() {
+    }
+    
+    /**
+     * Constructs a builder using an existing recipe to set its initial values.
+     * @param recipe the recipe that will be used to set the builder's initial values.
+     */
+    public Builder(Recipe recipe) {
+      this.typeIndicator = recipe.typeIndicator;
+      this.subtypeIndicator = recipe.subtypeIndicator;
+      this.temperatureFahrenheit = recipe.temperatureFahrenheit;
+      this.condiments.addAll(recipe.condiments);
     }
     
     /**
@@ -100,7 +121,7 @@ public class Recipe {
      * @param condiment the condiment to add.
      * @return reference to this builder.
      */
-    public Builder addCondiment(ParameterizedCondiment condiment) {
+    public Builder addCondiment(Condiment condiment) {
       condiments.add(requireNonNull(condiment));
       return this;
     }
