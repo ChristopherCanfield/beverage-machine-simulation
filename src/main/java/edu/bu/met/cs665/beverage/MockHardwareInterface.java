@@ -12,7 +12,7 @@ import org.apache.commons.lang.NotImplementedException;
 public class MockHardwareInterface implements HardwareInterface {
 
   @Override
-  public Future<CompletedOrder> makeBeverage(Recipe recipe) {
+  public Future<CompletedOrder> makeRecipe(Recipe recipe) {
     throw new NotImplementedException();
   }
 

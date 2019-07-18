@@ -10,7 +10,7 @@ public class BeverageControllerTest {
   
   @Before
   public void beforeEach() {
-    controller = new BeverageController();
+    controller = new BeverageController(new MockHardwareInterface());
   }
   
   
@@ -52,5 +52,8 @@ public class BeverageControllerTest {
     assertEquals(0, controller.observerCount());
   }
   
+  public void makeBeverage() {
+    controller.submitOrder();
+  }
   
 }
