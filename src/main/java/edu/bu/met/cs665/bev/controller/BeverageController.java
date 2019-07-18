@@ -21,47 +21,22 @@ public class BeverageController {
   private Set<BeverageControllerObserver> observers = new HashSet<>();
   
   
+  /**
+   * Constructs a new BeverageController that uses the specified hardware interface.
+   * @param hardwareInterface an interface into the underlying beverage hardware.
+   */
   public BeverageController(HardwareInterface hardwareInterface) {
     this.hardwareInterface = hardwareInterface;
   }
   
-  
-  //// Observer functionality ////
-  
   /**
-   * Adds the specified observer to this beverage controller.
-   * @param observer the observer to add.
+   * Returns the current state of the beverage controller.
+   * @return the current state of the beverage controller.
    */
-  public void addObserver(BeverageControllerObserver observer) {
-    observers.add(observer);
+  public State state() {
+    return state;
   }
   
-  /**
-   * Removes the specified observer from this beverage controller. If the 
-   * @param observer
-   */
-  public void removeObserver(BeverageControllerObserver observer) {
-    observers.remove(observer);
-  }
-  
-  /**
-   * The number of observers attached to this controller. Primarily intended for testing.
-   * @return the number of observers attached to this controller.
-   */
-  int observerCount() {
-    return observers.size();
-  }
-  
-  private void notifyObservers(Consumer<BeverageControllerObserver> action) {
-    observers.forEach(action);
-  }
-  
-  private void changeState(State newState) {
-    state = newState;
-    notifyObservers(observer -> observer.onStateChanged(this, newState));
-  }
-  
-  ////////
   
   
   public void submitOrder() {
@@ -74,4 +49,42 @@ public class BeverageController {
     
     throw new NotImplementedException();
   }
+  
+    
+  ////Observer functionality ////
+    
+  /**
+  * Adds the specified observer to this beverage controller.
+  * @param observer the observer to add.
+  */
+  public void addObserver(BeverageControllerObserver observer) {
+   observers.add(observer);
+  }
+  
+  /**
+  * Removes the specified observer from this beverage controller. If the 
+  * @param observer
+  */
+  public void removeObserver(BeverageControllerObserver observer) {
+   observers.remove(observer);
+  }
+  
+  /**
+  * The number of observers attached to this controller. Primarily intended for testing.
+  * @return the number of observers attached to this controller.
+  */
+  int observerCount() {
+   return observers.size();
+  }
+  
+  private void notifyObservers(Consumer<BeverageControllerObserver> action) {
+   observers.forEach(action);
+  }
+  
+  private void changeState(State newState) {
+   state = newState;
+   notifyObservers(observer -> observer.onStateChanged(this, newState));
+  }
+  
+  ////////
 }

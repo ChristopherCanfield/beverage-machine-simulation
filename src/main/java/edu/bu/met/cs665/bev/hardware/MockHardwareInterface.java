@@ -11,7 +11,12 @@ import edu.bu.met.cs665.bev.controller.Recipe;
  * @author Christopher D. Canfield
  */
 public class MockHardwareInterface implements HardwareInterface {
-
+  private final int delayMilliseconds;
+  
+  public MockHardwareInterface(int delayMilliseconds) {
+    this.delayMilliseconds = delayMilliseconds;
+  }
+  
   @Override
   public Future<CompletedOrder> makeRecipe(Recipe recipe) {
     throw new NotImplementedException();
