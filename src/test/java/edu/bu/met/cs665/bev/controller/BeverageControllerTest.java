@@ -8,26 +8,26 @@ import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 public class BeverageControllerTest {
 
   private MockHardwareInterface hardwareInterface;
-  private BeverageController controller;
+  private HotDrinkBeverageController controller;
   
   @Before
   public void beforeEach() {
     hardwareInterface = new MockHardwareInterface(200);
-    controller = new BeverageController(hardwareInterface);
+    controller = new HotDrinkBeverageController(hardwareInterface);
   }
   
   @Test
   public void state_initial() {
-    assertEquals(BeverageController.State.READY, controller.state());
+    assertEquals(HotDrinkBeverageController.State.READY, controller.state());
   }
   
   @Test 
   public void state_whileBrewing() {
-    assertEquals(BeverageController.State.READY, controller.state());
+    assertEquals(HotDrinkBeverageController.State.READY, controller.state());
     
     BeverageOrder order = new BeverageOrder(new AmericanoBeverage());
     controller.submitOrder(order);
-    assertEquals(BeverageController.State.MAKING_DRINK, controller.state());
+    assertEquals(HotDrinkBeverageController.State.MAKING_DRINK, controller.state());
   }
   
   @Test

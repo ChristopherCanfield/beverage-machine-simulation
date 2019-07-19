@@ -2,6 +2,11 @@ package edu.bu.met.cs665.bev.controller;
 
 import java.util.Objects;
 
+/**
+ * Base class for beverages. A beverage provides information needed to brew itself.
+ * 
+ * @author Christopher D. Canfield
+ */
 public abstract class Beverage {
   private final String name;
   
@@ -9,9 +14,17 @@ public abstract class Beverage {
     this.name = Objects.requireNonNull(name);
   }
   
+  /**
+   * The beverage's name, suitable for displaying to a user.
+   * @return the beverage's name.
+   */
   public String name() {
     return name;
   }
   
+  /**
+   * The beverage's recipe.
+   * @return the beverage's recipe.
+   */
   abstract Recipe recipe();
 }

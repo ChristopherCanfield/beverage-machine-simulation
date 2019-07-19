@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
+/**
+ * Loads and stores images.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class ResourceManager {
   public enum ImageId {
     MACHINE("beverage-machine.png"),
@@ -36,6 +41,13 @@ public class ResourceManager {
   
   private Map<ImageId, Image> images = new HashMap<>();
   
+  /**
+   * Returns the specified image. If the image has not already been loaded, it will be loaded from
+   * disk. Once loaded, a reference to the image is cache in this resource manager.
+   * @param imageId the image's ID, from the ImageId enum.
+   * @return the image.
+   * @throws IOException if the image can't be loaded.
+   */
   public Image getImage(ImageId imageId) throws IOException {
     Image image = images.get(imageId);
     if (image == null) {

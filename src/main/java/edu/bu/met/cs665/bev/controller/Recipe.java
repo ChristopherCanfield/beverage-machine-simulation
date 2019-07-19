@@ -6,6 +6,12 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A recipe for a beverage. Recipes construct the hardware commands that are fed into the hardware
+ * interface, which has ultimate responsibility for creating the drinks in the real world.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class Recipe {
   private final String hardwareCommand;
   

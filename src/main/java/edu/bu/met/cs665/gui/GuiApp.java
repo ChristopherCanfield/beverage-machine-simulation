@@ -19,15 +19,20 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import org.apache.log4j.Logger;
 import edu.bu.met.cs665.bev.controller.BeverageController;
-import edu.bu.met.cs665.bev.controller.BeverageController.State;
 import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
 import edu.bu.met.cs665.bev.controller.BeverageOrder;
 import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
+import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 import edu.bu.met.cs665.gui.ResourceManager.ImageId;
 
+/**
+ * A GUI interface for the Beverage Controller, which uses Swing as its GUI framework.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class GuiApp extends Component implements MouseListener, KeyListener, BeverageControllerObserver  {
   private static final long serialVersionUID = 1L;
   
@@ -54,13 +59,13 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private List<Button> buttons = new ArrayList<Button>();
   
   private HardwareInterface hardwareInterface;
-  private BeverageController controller;
+  private HotDrinkBeverageController controller;
   
   public void start() throws IOException {
     assert SwingUtilities.isEventDispatchThread();
     
     hardwareInterface = new MockHardwareInterface(1_500);
-    controller = new BeverageController(hardwareInterface);
+    controller = new HotDrinkBeverageController(hardwareInterface);
     // Subscribe to BeverageController events.
     controller.addObserver(this);
 
@@ -178,7 +183,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   //// BeverageControllerObserver events ////
   
   @Override
-  public void onStateChanged(BeverageController controller, State newState) {
+  public void onStateChanged(BeverageController controller, BeverageController.State newState) {
     logger.info("Beverage Controller reports that its state has changed to " + newState);
   }
 

@@ -1,6 +1,5 @@
 package edu.bu.met.cs665.bev.controller;
 
-import edu.bu.met.cs665.bev.controller.BeverageController.State;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 
 /**
@@ -36,7 +35,7 @@ class TrackingBeverageControllerObserver implements BeverageControllerObserver {
   }
   
   @Override
-  public void onStateChanged(BeverageController controller, State newState) {
+  public void onStateChanged(BeverageController controller, BeverageController.State newState) {
     onStateChangedCalled = true;
   }
 

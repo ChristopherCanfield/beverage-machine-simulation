@@ -6,6 +6,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A beverage order, which includes the type of drink to make, and, optionally, the condiments to
+ * include.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class BeverageOrder {
   private final Beverage beverage;
   private final List<Condiment> condiments = new ArrayList<>();
@@ -15,7 +21,8 @@ public class BeverageOrder {
   }
   
   /**
-   * Adds the specified condiment to this order.
+   * Adds the specified condiment to this order. The beverage order does not have a limit on 
+   * condiments, but specific BeverageController implementations may.
    * @param condiment the condiment to add.
    */
   public void addCondiment(Condiment condiment) {

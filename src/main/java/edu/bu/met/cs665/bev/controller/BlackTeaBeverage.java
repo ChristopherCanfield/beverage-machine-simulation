@@ -1,5 +1,10 @@
 package edu.bu.met.cs665.bev.controller;
 
+/**
+ * Contains information required to brew a black tea.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class BlackTeaBeverage extends TeaBeverage {
   private final Recipe recipe;
   

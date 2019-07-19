@@ -12,14 +12,14 @@ import com.google.common.util.concurrent.MoreExecutors;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 
-public class BeverageController implements FutureCallback<CompletedOrder> {
+/**
+ * A beverage controller implementation that makes hot drinks.
+ * 
+ * @author Christopher D. Canfield
+ */
+public class HotDrinkBeverageController implements BeverageController, FutureCallback<CompletedOrder> {
   private static final int MAX_MILK = 3;
   private static final int MAX_SUGAR = 3;
-  
-  public enum State {
-    READY,
-    MAKING_DRINK
-  }
   
   private final HardwareInterface hardwareInterface;
   private State state = State.READY;
@@ -35,20 +35,16 @@ public class BeverageController implements FutureCallback<CompletedOrder> {
    * Constructs a new BeverageController that uses the specified hardware interface.
    * @param hardwareInterface an interface into the underlying beverage hardware.
    */
-  public BeverageController(HardwareInterface hardwareInterface) {
+  public HotDrinkBeverageController(HardwareInterface hardwareInterface) {
     this.hardwareInterface = hardwareInterface;
   }
   
-  /**
-   * Returns the current state of the beverage controller.
-   * @return the current state of the beverage controller.
-   */
+  @Override
   public State state() {
     return state;
   }
   
-  
-  
+  @Override
   public void submitOrder(BeverageOrder order) {
     notifyObservers(observer -> observer.onOrderReceived(this, order));
     changeState(State.MAKING_DRINK);
@@ -121,18 +117,12 @@ public class BeverageController implements FutureCallback<CompletedOrder> {
   
   ////Observer functionality ////
     
-  /**
-  * Adds the specified observer to this beverage controller.
-  * @param observer the observer to add.
-  */
+  @Override
   public void addObserver(BeverageControllerObserver observer) {
    observers.add(observer);
   }
   
-  /**
-  * Removes the specified observer from this beverage controller. If the 
-  * @param observer
-  */
+  @Override
   public void removeObserver(BeverageControllerObserver observer) {
    observers.remove(observer);
   }

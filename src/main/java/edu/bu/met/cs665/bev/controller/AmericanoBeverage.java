@@ -1,5 +1,10 @@
 package edu.bu.met.cs665.bev.controller;
 
+/**
+ * Contains information required to brew an americano.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class AmericanoBeverage extends CoffeeBeverage {
   private final Recipe recipe;
   

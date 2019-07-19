@@ -15,11 +15,12 @@ public interface BeverageControllerObserver {
    * @param controller the controller that had a change in state.
    * @param newState the new state of the controller.
    */
-  void onStateChanged(BeverageController controller, BeverageController.State newState);
+  void onStateChanged(BeverageController controller, HotDrinkBeverageController.State newState);
   
   /**
    * Called when the observed controller receives an order.
    * @param controller the controller that received an order.
+   * @param order the order that was received.
    */
   void onOrderReceived(BeverageController controller, BeverageOrder order);
   

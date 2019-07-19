@@ -2,18 +2,22 @@ package edu.bu.met.cs665;
 
 import org.apache.log4j.Logger;
 import edu.bu.met.cs665.bev.controller.BeverageController;
-import edu.bu.met.cs665.bev.controller.BeverageController.State;
 import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
 import edu.bu.met.cs665.bev.controller.BeverageOrder;
+import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
 import edu.bu.met.cs665.bev.controller.LatteMacchiatoBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 
+/**
+ * Used to test the Hot Beverage Controller. Results are output to the logger.
+ * 
+ * @author Christopher D. Canfield
+ */
 public class Main implements BeverageControllerObserver {
 
   private static Logger logger = Logger.getLogger(Main.class);
-
 
   /**
    * A main method to run examples.
@@ -29,12 +33,15 @@ public class Main implements BeverageControllerObserver {
     logger.info("Main: Exiting BeverageController tests.");
   }
   
+  /**
+   * Tests the Hot Beverage Controller, and outputs the results to the logger.
+   */
   public void testBeverageController() {
     logger.info("Main: Constructing the HardwareInterface");
     HardwareInterface hardwareInterface = new MockHardwareInterface(20);
     
     logger.info("Main: Constructing BeverageController");
-    BeverageController controller = new BeverageController(hardwareInterface);
+    HotDrinkBeverageController controller = new HotDrinkBeverageController(hardwareInterface);
     logger.info("Main: Subscribing to BeverageController's events.");
     controller.addObserver(this);
     
@@ -59,7 +66,7 @@ public class Main implements BeverageControllerObserver {
 
 
   @Override
-  public void onStateChanged(BeverageController controller, State newState) {
+  public void onStateChanged(BeverageController controller, BeverageController.State newState) {
     logger.info("BeverageController's state changed: " + newState);
   }
 
