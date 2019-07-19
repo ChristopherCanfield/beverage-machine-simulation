@@ -5,7 +5,7 @@ import edu.bu.met.cs665.bev.controller.BeverageController;
 import edu.bu.met.cs665.bev.controller.BeverageController.State;
 import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
 import edu.bu.met.cs665.bev.controller.BeverageOrder;
-import edu.bu.met.cs665.bev.controller.LatteMachiatoBeverage;
+import edu.bu.met.cs665.bev.controller.LatteMacchiatoBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
@@ -41,7 +41,7 @@ public class Main implements BeverageControllerObserver {
     logger.info("Main: BeverageController's current state: " + controller.state());
     
     logger.info("Main: Constructing first order.");
-    BeverageOrder order1 = new BeverageOrder(new LatteMachiatoBeverage());
+    BeverageOrder order1 = new BeverageOrder(new LatteMacchiatoBeverage());
     logger.info("Main: Submitting first order to BeverageController: " + order1.toString());
     controller.submitOrder(order1);
     

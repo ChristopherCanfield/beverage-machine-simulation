@@ -65,7 +65,7 @@ public class BeverageTest {
   
   @Test
   public void LatteMachiatoBeverage() {
-    Beverage bev = new LatteMachiatoBeverage();
+    Beverage bev = new LatteMacchiatoBeverage();
     assertEquals("Latte Machiato", bev.name());
     assertEquals("C:LM:205", bev.recipe().hardwareCommand());
   }

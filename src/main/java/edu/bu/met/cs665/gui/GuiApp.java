@@ -9,10 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -25,6 +23,7 @@ import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
+import edu.bu.met.cs665.gui.ResourceManager.ImageId;
 
 public class GuiApp extends Component implements MouseListener, KeyListener, BeverageControllerObserver  {
   private static final long serialVersionUID = 1L;
@@ -36,33 +35,38 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
       @Override
       public void run() {
         GuiApp app = new GuiApp();
-        app.start();
+        try {
+          app.start();
+        } catch (IOException e) {
+          logger.error(e.toString());
+        }
       }});
   }
   
   private JFrame window;
   
-  private Image currentImage;
-  private Image automaticBeverageMachineImage;
-  private Image automaticBeverageMachineImageWithCoffee;
+  private ResourceManager resourceManager = new ResourceManager();
+  private Image currentMachineImage;
+  private Image currentMilkQuantityImage;
+  private Image currentSugarQuantityImage;
   
   private List<Button> buttons = new ArrayList<Button>();
   
   private HardwareInterface hardwareInterface;
   private BeverageController controller;
   
-  public void start() {
+  public void start() throws IOException {
     hardwareInterface = new MockHardwareInterface(1_500);
     controller = new BeverageController(hardwareInterface);
     // Subscribe to BeverageController events.
     controller.addObserver(this);
-    
-    addButtons();
-    
-    loadImages();
-    currentImage = automaticBeverageMachineImage;
+
+    currentMachineImage = resourceManager.getImage(ImageId.MACHINE);
+    currentMilkQuantityImage = resourceManager.getImage(ImageId.CHAR_0);
+    currentSugarQuantityImage = resourceManager.getImage(ImageId.CHAR_0);
     
     createWindow();
+    addButtons();
     
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setVisible(true);
@@ -108,19 +112,6 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     }));
   }
   
-  private void loadImages() {
-    try {
-      InputStream imageInputStream = getClass().getClassLoader().getResourceAsStream("assignment-1-beverage-machine.png");
-      automaticBeverageMachineImage = ImageIO.read(imageInputStream);
-      
-      imageInputStream = getClass().getClassLoader().getResourceAsStream("assignment-1-beverage-machine-with-drink.png");
-      automaticBeverageMachineImageWithCoffee = ImageIO.read(imageInputStream);
-    } catch (IOException e) {
-      logger.error(e);
-      // TODO: It would probably be better to crash here, since the image wasn't found.
-    }    
-  }
-  
   private void createWindow() {
     window = new JFrame("Automatic Beverage Machine");
     window.setUndecorated(true);
@@ -137,7 +128,9 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   
   @Override
   public void paint(Graphics g) {
-    g.drawImage(currentImage, 0, 0, null);
+    g.drawImage(currentMachineImage, 0, 0, null);
+    g.drawImage(currentMilkQuantityImage, 203, 275, null);
+    g.drawImage(currentSugarQuantityImage, 203, 311, null);
   }
 
   @Override
@@ -194,7 +187,11 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   public void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder) {
     logger.info("Beverage is ready");
     SwingUtilities.invokeLater(() -> {
-      currentImage = automaticBeverageMachineImageWithCoffee;
+      try {
+        currentMachineImage = resourceManager.getImage(ImageId.MACHINE_WITH_DRINK);
+      } catch (IOException e) {
+        logger.error("Error loading " + ImageId.MACHINE_WITH_DRINK.path() + ": " + e.toString());
+      }
       
       // Redraw the image.
       repaint();
