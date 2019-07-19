@@ -22,7 +22,7 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   private static final int MAX_SUGAR = 3;
   
   private final HardwareInterface hardwareInterface;
-  private State state = State.READY;
+  private BeverageController.State state = BeverageController.State.READY;
   
   // While an array list would be a logical choice here, I used a hashset to prevent an observer 
   // from being stored and notified multiple times.
@@ -40,14 +40,14 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   }
   
   @Override
-  public State state() {
+  public BeverageController.State state() {
     return state;
   }
   
   @Override
   public void submitOrder(BeverageOrder order) {
     notifyObservers(observer -> observer.onOrderReceived(this, order));
-    changeState(State.MAKING_DRINK);
+    changeState(BeverageController.State.MAKING_DRINK);
     
     BeverageOrder verifiedOrder = verifyOrder(order);
     
@@ -105,13 +105,13 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   @Override
   public void onSuccess(@Nullable CompletedOrder result) {
     notifyObservers(observer -> observer.onOrderCompleted(this, result));
-    changeState(State.READY);
+    changeState(BeverageController.State.READY);
   }
 
   @Override
   public void onFailure(Throwable t) {
     notifyObservers(observer -> observer.onOrderFailed(this, t));
-    changeState(State.READY);
+    changeState(BeverageController.State.READY);
   }
   
   
@@ -139,7 +139,7 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
    observers.forEach(action);
   }
   
-  private void changeState(State newState) {
+  private void changeState(BeverageController.State newState) {
    state = newState;
    notifyObservers(observer -> observer.onStateChanged(this, newState));
   }

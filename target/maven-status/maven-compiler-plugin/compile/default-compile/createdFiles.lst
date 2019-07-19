@@ -24,6 +24,7 @@ edu/bu/met/cs665/bev/controller/BeverageController$State.class
 edu/bu/met/cs665/bev/controller/MilkCondiment.class
 edu/bu/met/cs665/bev/hardware/CompletedOrder.class
 edu/bu/met/cs665/bev/controller/EspressoBeverage.class
+edu/bu/met/cs665/bev/controller/HotDrinkBeverageController.class
 edu/bu/met/cs665/gui/ResourceManager.class
 edu/bu/met/cs665/bev/controller/GreenTeaBeverage.class
 edu/bu/met/cs665/bev/controller/BlackTeaBeverage.class
