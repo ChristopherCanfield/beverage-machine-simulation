@@ -9,6 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -31,16 +34,14 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private static final Logger logger = Logger.getLogger(GuiApp.class);
 
   public static void main(String[] args) {
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
+    javax.swing.SwingUtilities.invokeLater(() -> {
         GuiApp app = new GuiApp();
         try {
           app.start();
         } catch (IOException e) {
           logger.error(e.toString());
         }
-      }});
+      });
   }
   
   private JFrame window;
@@ -56,6 +57,8 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private BeverageController controller;
   
   public void start() throws IOException {
+    assert SwingUtilities.isEventDispatchThread();
+    
     hardwareInterface = new MockHardwareInterface(1_500);
     controller = new BeverageController(hardwareInterface);
     // Subscribe to BeverageController events.
@@ -175,17 +178,23 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   //// BeverageControllerObserver events ////
   
   @Override
-  public void onStateChanged(BeverageController controller, State newState) {}
+  public void onStateChanged(BeverageController controller, State newState) {
+    logger.info("Beverage Controller reports that its state has changed to " + newState);
+  }
 
   @Override
-  public void onOrderReceived(BeverageController controller, BeverageOrder order) {}
+  public void onOrderReceived(BeverageController controller, BeverageOrder order) {
+    logger.info("Beverage Controller reports that is has received an order.");
+  }
 
   @Override
-  public void onTooManyCondimentsOrdered(BeverageController controller, String message) {}
+  public void onTooManyCondimentsOrdered(BeverageController controller, String message) {
+    logger.info("Beverage Controller reports that too many condiments were included in the order. Message: " + message);
+  }
 
   @Override
   public void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder) {
-    logger.info("Beverage is ready");
+    logger.info("Beverage Controller reports that beverage is ready.");
     SwingUtilities.invokeLater(() -> {
       try {
         currentMachineImage = resourceManager.getImage(ImageId.MACHINE_WITH_DRINK);
@@ -200,5 +209,19 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   }
 
   @Override
-  public void onOrderFailed(BeverageController controller, Throwable throwable) {}
+  public void onOrderFailed(BeverageController controller, Throwable throwable) {
+    logger.warn("Beverage Controller reports that the order has failed. Error: " + throwable);
+  }
+  
+  
+  // Swing components are serializable, but this application has no need for that functionality.
+  // By disabling it, we also eliminate a valid, but irrelevant to us, FindBugs warning.
+  
+  private void writeObject(ObjectOutputStream stream) throws IOException {
+    throw new NotSerializableException(GuiApp.class.getName() + " is not serializable.");
+  }
+
+  private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+    throw new NotSerializableException(GuiApp.class.getName() + " is not serializable.");
+  }
 }
