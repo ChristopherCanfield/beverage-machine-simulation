@@ -1,9 +1,8 @@
-package edu.bu.met.cs665;
+package edu.bu.met.cs665.gui;
 
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -11,9 +10,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 import org.apache.log4j.Logger;
 import edu.bu.met.cs665.bev.controller.BeverageController;
 import edu.bu.met.cs665.bev.controller.BeverageController.State;
@@ -44,7 +46,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private Image automaticBeverageMachineImage;
   private Image automaticBeverageMachineImageWithCoffee;
   
-  private Rectangle brewButton = new Rectangle(159, 358, 98, 47);
+  private List<Button> buttons = new ArrayList<Button>();
   
   private HardwareInterface hardwareInterface;
   private BeverageController controller;
@@ -52,13 +54,58 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   public void start() {
     hardwareInterface = new MockHardwareInterface(1_500);
     controller = new BeverageController(hardwareInterface);
+    // Subscribe to BeverageController events.
     controller.addObserver(this);
+    
+    addButtons();
     
     loadImages();
     currentImage = automaticBeverageMachineImage;
     
     createWindow();
+    
+    window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setVisible(true);
+  }
+  
+  private void addButtons() {
+    // Brew button
+    buttons.add(new Button(159, 358, 98, 47, () -> {
+      logger.debug("Brew button clicked. Submitting order.");
+      // TODO (2019-07-18): Make this changeable.
+      BeverageOrder order = new BeverageOrder(new GreenTeaBeverage());
+      controller.submitOrder(order);
+    }));
+    
+    // Type down
+    buttons.add(new Button(178, 235, 31, 34, () -> {
+      logger.debug("Beverage type down clicked.");
+    }));
+    
+    // Type up
+    buttons.add(new Button(312, 235, 31, 34, () -> {
+      logger.debug("Beverage type up clicked.");
+    }));
+    
+    // Milk down
+    buttons.add(new Button(178, 276, 31, 34, () -> {
+      logger.debug("Milk down clicked.");
+    }));
+    
+    // Milk up
+    buttons.add(new Button(229, 276, 31, 34, () -> {
+      logger.debug("Milk up clicked.");
+    }));
+    
+    // Sugar down
+    buttons.add(new Button(178, 313, 31, 34, () -> {
+      logger.debug("Sugar down clicked.");
+    }));
+    
+    // Sugar up
+    buttons.add(new Button(229, 313, 31, 34, () -> {
+      logger.debug("Sugar up clicked.");
+    }));
   }
   
   private void loadImages() {
@@ -97,12 +144,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   public void mouseClicked(MouseEvent e) {
     logger.debug("MouseClicked: " + e.getX() + "," + e.getY());
     
-    if (brewButton.contains(e.getPoint())) {
-      logger.debug("Brew button clicked");
-      
-      BeverageOrder order = new BeverageOrder(new GreenTeaBeverage());
-      controller.submitOrder(order);
-    }
+    buttons.forEach(button -> button.executeIfContains(e.getPoint()));
   }
   
   
