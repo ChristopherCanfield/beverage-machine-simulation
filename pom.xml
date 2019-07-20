@@ -12,7 +12,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<!-- cdc (6/27/2019): They are required to compile this using newer versions of the JDK.
+		<!-- cdc (6/27/2019): These lines are required to compile this using newer versions of the JDK.
 			See: https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html -->
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
