@@ -55,13 +55,13 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
 
   public static void main(String[] args) {
     javax.swing.SwingUtilities.invokeLater(() -> {
-        GuiApp app = new GuiApp();
-        try {
-          app.start();
-        } catch (IOException e) {
-          logger.error(e.toString());
-        }
-      });
+      GuiApp app = new GuiApp();
+      try {
+        app.start();
+      } catch (IOException e) {
+        logger.error(e.toString());
+      }
+    });
   }
   
   private JFrame window;

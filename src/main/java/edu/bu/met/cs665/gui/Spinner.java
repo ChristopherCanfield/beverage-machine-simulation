@@ -63,7 +63,7 @@ public class Spinner<T> {
   /**
    * Draws the Spinner's value.
    * @param g a reference to the graphics context.
-   * @throws IOException 
+   * @throws IOException if the spinner's image can't be loaded.
    */
   public void paint(Graphics g) throws IOException {
     Image image = resourceManager.getImage(items.get(itemIndex).imageId);
