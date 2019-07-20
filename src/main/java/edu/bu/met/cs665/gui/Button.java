@@ -17,6 +17,11 @@ public class Button {
     this.action = action;
   }
   
+  public Button(Rectangle rect, Runnable action) {
+    // Don't keep a reference to the passed-in Rectangle, since it is mutable.
+    this(rect.x, rect.y, rect.width, rect.height, action);
+  }
+  
   /**
    * Executes this button's action if point is within the bounding box of this button.
    * @param point an x,y coordinate.

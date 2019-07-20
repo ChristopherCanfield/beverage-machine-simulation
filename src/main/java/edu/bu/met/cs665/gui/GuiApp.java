@@ -1,10 +1,16 @@
 package edu.bu.met.cs665.gui;
 
+import edu.bu.met.cs665.bev.controller.AmericanoBeverage;
+import edu.bu.met.cs665.bev.controller.Beverage;
 import edu.bu.met.cs665.bev.controller.BeverageController;
 import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
 import edu.bu.met.cs665.bev.controller.BeverageOrder;
+import edu.bu.met.cs665.bev.controller.BlackTeaBeverage;
+import edu.bu.met.cs665.bev.controller.EspressoBeverage;
 import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
 import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
+import edu.bu.met.cs665.bev.controller.LatteMacchiatoBeverage;
+import edu.bu.met.cs665.bev.controller.YellowTeaBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
@@ -13,6 +19,8 @@ import edu.bu.met.cs665.gui.ResourceManager.ImageId;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -60,6 +68,9 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private Image currentSugarQuantityImage;
   
   private List<Button> buttons = new ArrayList<Button>();
+  private Spinner<Integer> milkSpinner;
+  private Spinner<Integer> sugarSpinner;
+  private Spinner<Beverage> beverageSpinner;
   
   private HardwareInterface hardwareInterface;
   private HotDrinkBeverageController controller;
@@ -79,6 +90,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     
     createWindow();
     addButtons();
+    addSpinners();
     
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setVisible(true);
@@ -124,6 +136,40 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     }));
   }
   
+  private void addSpinners() throws IOException {
+    Spinner.Builder<Integer> condimentBuilder = new Spinner.Builder<Integer>()
+        .setResourceManager(resourceManager)
+        .addItem(0, ImageId.CHAR_0)
+        .addItem(1, ImageId.CHAR_1)
+        .addItem(2, ImageId.CHAR_2)
+        .addItem(3, ImageId.CHAR_3);
+    
+    milkSpinner = condimentBuilder
+        .setUpButtonRect(new Rectangle(229, 276, 31, 34))
+        .setDownButtonRect(new Rectangle(178, 276, 31, 34))
+        .setItemPosition(new Point(210, 318))
+        .build();
+    
+    sugarSpinner = condimentBuilder
+        .setUpButtonRect(new Rectangle(229, 313, 31, 34))
+        .setDownButtonRect(new Rectangle(178, 313, 31, 34))
+        .setItemPosition(new Point(210, 318))
+        .build();
+    
+    beverageSpinner = new Spinner.Builder<Beverage>()
+        .setResourceManager(resourceManager)
+        .setUpButtonRect(new Rectangle(312, 235, 31, 34))
+        .setDownButtonRect(new Rectangle(178, 235, 31, 34))
+        .setItemPosition(new Point(163, 241))
+        .addItem(new AmericanoBeverage(), ImageId.TEXT_AMERICANO)
+        .addItem(new EspressoBeverage(), ImageId.TEXT_ESPRESSO)
+        .addItem(new LatteMacchiatoBeverage(), ImageId.TEXT_LATTE_MACCHIATO)
+        .addItem(new BlackTeaBeverage(), ImageId.TEXT_BLACK_TEA)
+        .addItem(new GreenTeaBeverage(), ImageId.TEXT_GREEN_TEA)
+        .addItem(new YellowTeaBeverage(), ImageId.TEXT_YELLOW_TEA)
+        .build();
+  }
+  
   private void createWindow() {
     window = new JFrame("Automatic Beverage Machine");
     window.setUndecorated(true);
@@ -143,6 +189,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     g.drawImage(currentMachineImage, 0, 0, null);
     g.drawImage(currentMilkQuantityImage, 203, 275, null);
     g.drawImage(currentSugarQuantityImage, 203, 311, null);
+    
   }
 
   @Override
