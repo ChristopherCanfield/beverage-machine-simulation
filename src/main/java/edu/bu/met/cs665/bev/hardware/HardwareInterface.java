@@ -1,6 +1,7 @@
 package edu.bu.met.cs665.bev.hardware;
 
 import com.google.common.util.concurrent.ListenableFuture;
+
 import edu.bu.met.cs665.bev.controller.Recipe;
 
 /**
@@ -26,7 +27,8 @@ public interface HardwareInterface {
   /**
    * Shuts down the hardware interface, and waits for any already submitted orders to be processed, 
    * as long they can be completed before the timeoutMilliseconds expires.
-   * @param timeoutMilliseconds the maximum amount of time, in milliseconds, to wait for the orders to finish.
+   * @param timeoutMilliseconds the maximum amount of time, in milliseconds, to wait for the orders
+   *        to finish.
    * @return true if all orders were processed, or false otherwise.
    * @throws InterruptedException the thread was interrupted.
    */

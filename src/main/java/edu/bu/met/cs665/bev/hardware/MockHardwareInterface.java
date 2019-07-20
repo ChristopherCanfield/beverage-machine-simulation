@@ -38,13 +38,14 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   }
   
   /**
-   * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to simulate
-   * the time it takes to make a drink.
+   * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to 
+   * simulate the time it takes to make a drink.
    * @param makeRecipeDelayMilliseconds the amount of time, in milliseconds, that makeRecipe will
-   * take to return its Future.
+   *        take to return its Future.
    */
   public MockHardwareInterface(int makeRecipeDelayMilliseconds) {
-    checkArgument(makeRecipeDelayMilliseconds >= 0, "The delay provided to the " + getClass().getSimpleName() + " must be >= 0.");
+    checkArgument(makeRecipeDelayMilliseconds >= 0, "The delay provided to the " 
+          + getClass().getSimpleName() + " must be >= 0.");
     this.delayMilliseconds = makeRecipeDelayMilliseconds;
   }
   

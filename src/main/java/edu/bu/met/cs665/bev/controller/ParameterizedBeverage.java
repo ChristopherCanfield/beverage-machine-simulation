@@ -10,7 +10,8 @@ package edu.bu.met.cs665.bev.controller;
 public class ParameterizedBeverage extends Beverage {
   private final Recipe recipe;
   
-  protected ParameterizedBeverage(String name, String typeIndicator, String subtypeIndicator, int temperatureFahrenheit) {
+  protected ParameterizedBeverage(String name, String typeIndicator, String subtypeIndicator, 
+          int temperatureFahrenheit) {
     super(name);
     
     recipe = new Recipe.Builder().setTypeIndicator(typeIndicator)

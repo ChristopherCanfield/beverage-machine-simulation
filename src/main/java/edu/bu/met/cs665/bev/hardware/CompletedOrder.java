@@ -9,7 +9,8 @@ public class CompletedOrder {
   private Recipe recipe;
   private Instant finishedAtTime;
   
-  public CompletedOrder(HardwareInterface hardwareInterface, Recipe recipe, Instant finishedAtTime) {
+  public CompletedOrder(HardwareInterface hardwareInterface, Recipe recipe, 
+      Instant finishedAtTime) {
     this.hardwareInterfaceName = hardwareInterface.getClass().getSimpleName();
     this.recipe = recipe;
     this.finishedAtTime = finishedAtTime;
