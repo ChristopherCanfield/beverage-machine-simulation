@@ -1,6 +1,7 @@
 package edu.bu.met.cs665.bev.controller;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class BeverageTest {
@@ -66,7 +67,7 @@ public class BeverageTest {
   @Test
   public void latteMachiatoBeverage() {
     Beverage bev = new LatteMacchiatoBeverage();
-    assertEquals("Latte Machiato", bev.name());
+    assertEquals("Latte Macchiato", bev.name());
     assertEquals("C:LM:205", bev.recipe().hardwareCommand());
   }
 }
