@@ -1,6 +1,13 @@
 package edu.bu.met.cs665.bev.hardware;
 
 import static com.google.common.base.Preconditions.checkArgument;
+
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+
+import edu.bu.met.cs665.bev.controller.Recipe;
+
 import java.time.Instant;
 import java.util.Deque;
 import java.util.concurrent.Callable;
@@ -8,10 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningScheduledExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-import edu.bu.met.cs665.bev.controller.Recipe;
 
 /**
  * A hardware interface that does not attach to real hardware. Instead, calls to its methods are
