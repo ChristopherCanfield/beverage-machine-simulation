@@ -126,12 +126,12 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
     
   @Override
   public void addObserver(BeverageControllerObserver observer) {
-   observers.add(observer);
+    observers.add(observer);
   }
   
   @Override
   public void removeObserver(BeverageControllerObserver observer) {
-   observers.remove(observer);
+    observers.remove(observer);
   }
   
   /**
@@ -139,16 +139,16 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   * @return the number of observers attached to this controller.
   */
   int observerCount() {
-   return observers.size();
+    return observers.size();
   }
   
   private void notifyObservers(Consumer<BeverageControllerObserver> action) {
-   observers.forEach(action);
+    observers.forEach(action);
   }
   
   private void changeState(State newState) {
-   state = newState;
-   notifyObservers(observer -> observer.onStateChanged(this, newState));
+    state = newState;
+    notifyObservers(observer -> observer.onStateChanged(this, newState));
   }
   
   ////////

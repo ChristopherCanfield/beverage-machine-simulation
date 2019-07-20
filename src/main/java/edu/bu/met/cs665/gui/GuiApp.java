@@ -124,7 +124,8 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
         order.addCondiment(new SugarCondiment());
       }
       
-      logger.info(GuiApp.class.getSimpleName() + ": Brew button clicked. Submitting order: " + order);
+      logger.info(GuiApp.class.getSimpleName() + ": Brew button clicked. Submitting order: " 
+            + order);
       controller.submitOrder(order);
     }));
     
@@ -307,13 +308,14 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
 
   @Override
   public void onTooManyCondimentsOrdered(BeverageController controller, String message) {
-    logger.info("Beverage Controller reports that too many condiments were included in the order. Message: " + message);
+    logger.info("Beverage Controller reports that too many condiments were included in the order."
+          + " Message: " + message);
   }
 
   @Override
   public void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder) {
-    logger.info(String.format("Beverage Controller reports that beverage is ready at %s. Order " + 
-          "hardware command was %s", completedOrder.finishedAtTime(), 
+    logger.info(String.format("Beverage Controller reports that beverage is ready at %s. Order " 
+          + "hardware command was %s", completedOrder.finishedAtTime(), 
           completedOrder.recipe().hardwareCommand()));
     
     SwingUtilities.invokeLater(() -> {

@@ -1,7 +1,8 @@
 package edu.bu.met.cs665.bev.hardware;
 
-import java.time.Instant;
 import edu.bu.met.cs665.bev.controller.Recipe;
+
+import java.time.Instant;
 
 public class CompletedOrder {
   private String hardwareInterfaceName;
