@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -48,8 +49,9 @@ import org.apache.log4j.Logger;
  * 
  * @author Christopher D. Canfield
  */
-public class GuiApp extends Component implements 
-    MouseListener, KeyListener, BeverageControllerObserver  {
+public class GuiApp extends Component implements
+	BeverageControllerObserver,
+    MouseListener, KeyListener, MouseMotionListener {
   private static final long serialVersionUID = 1L;
   
   private static final Logger logger = Logger.getLogger(GuiApp.class);
@@ -162,22 +164,18 @@ public class GuiApp extends Component implements
   }
   
   private void addSpinners() throws IOException {
-    Spinner.Builder<Integer> condimentBuilder = new Spinner.Builder<Integer>()
-        .setResourceManager(resourceManager)
-        .addItem(0, ImageId.CHAR_0)
-        .addItem(1, ImageId.CHAR_1)
-        .addItem(2, ImageId.CHAR_2)
-        .addItem(3, ImageId.CHAR_3);
+	// Create a condimentBuilder prototype.
+    Spinner.Builder<Integer> condimentBuilder = createCondimentBuilderPrototype(resourceManager);
     
     // Create the milk spinner.
-    milkSpinner = condimentBuilder
+    milkSpinner = condimentBuilder.clone()
         .setUpButtonRect(new Rectangle(229, 276, 31, 34))
         .setDownButtonRect(new Rectangle(178, 276, 31, 34))
         .setItemPosition(new Point(202, 275))
         .build();
     
     // Create the sugar spinner.
-    sugarSpinner = condimentBuilder
+    sugarSpinner = condimentBuilder.clone()
         .setUpButtonRect(new Rectangle(229, 313, 31, 34))
         .setDownButtonRect(new Rectangle(178, 313, 31, 34))
         .setItemPosition(new Point(202, 310))
@@ -198,6 +196,15 @@ public class GuiApp extends Component implements
         .build();
   }
   
+  private static Spinner.Builder<Integer> createCondimentBuilderPrototype(ResourceManager rm) {
+	  return new Spinner.Builder<Integer>()
+		        .setResourceManager(rm)
+		        .addItem(0, ImageId.CHAR_0)
+		        .addItem(1, ImageId.CHAR_1)
+		        .addItem(2, ImageId.CHAR_2)
+		        .addItem(3, ImageId.CHAR_3);
+  }
+  
   private void createWindow() {
     window = new JFrame("Automatic Beverage Machine");
     window.setUndecorated(true);
@@ -206,6 +213,7 @@ public class GuiApp extends Component implements
     
     window.addKeyListener(this);
     window.addMouseListener(this);
+    window.addMouseMotionListener(this);
     window.add(this);
 
     window.setLocationRelativeTo(null);
@@ -233,6 +241,9 @@ public class GuiApp extends Component implements
     }
   }
 
+  
+  //// MouseEventListener events ////
+
   @Override
   public void mouseClicked(MouseEvent e) {
     logger.debug("MouseClicked: " + e.getX() + "," + e.getY());
@@ -248,9 +259,6 @@ public class GuiApp extends Component implements
     revalidate();
   }
   
-  
-  //// MouseEventListener events ////
-
   @Override
   public void mouseEntered(MouseEvent e) {
   }
@@ -265,6 +273,21 @@ public class GuiApp extends Component implements
 
   @Override
   public void mouseReleased(MouseEvent e) {
+  }
+  
+  
+  //// MouseListener events ////
+  
+  // Make the window moveable.
+  @Override
+  public void mouseDragged(MouseEvent e) {
+	int x = e.getXOnScreen() - window.getWidth() / 2;
+	int y = e.getYOnScreen() - window.getHeight() / 2;
+	window.setLocation(x, y);
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e) {
   }
 
   

@@ -96,7 +96,7 @@ public class Spinner<T> {
    * @author Christopher D. Canfield
    * @param <T> the item type associated with the spinner.
    */
-  public static class Builder<T> {
+  public static final class Builder<T> implements Cloneable {
     private Rectangle upButtonRect;
     private Rectangle downButtonRect;
     private ResourceManager resourceManager;
@@ -104,6 +104,20 @@ public class Spinner<T> {
     private List<Item<T>> items = new ArrayList<>();
     
     public Builder() {
+    }
+    
+    @Override
+    public Builder<T> clone() {
+    	Builder<T> builder = new Builder<>();
+    	// Clones create their own copies of the Rectangles and Points, since they're mutable.
+    	builder.upButtonRect = (upButtonRect != null) ? new Rectangle(upButtonRect) : null;
+    	builder.downButtonRect = (downButtonRect != null) ? new Rectangle(downButtonRect) : null;
+    	builder.itemPosition = (itemPosition != null) ? new Point(itemPosition) : null;
+    	// Clones point to the same resource manager.
+    	builder.resourceManager = resourceManager;
+    	// Beverages are specified to be immutable, so it's fine to share references to them. 
+    	builder.items.addAll(items);
+    	return builder;
     }
 
     public Builder<T> setUpButtonRect(Rectangle upButtonRect) {

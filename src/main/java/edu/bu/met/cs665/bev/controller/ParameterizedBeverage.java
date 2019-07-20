@@ -21,7 +21,7 @@ public class ParameterizedBeverage extends Beverage {
   }
 
   @Override
-  Recipe recipe() {
+  protected Recipe recipe() {
     return recipe;
   }
 }

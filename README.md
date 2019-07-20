@@ -1,102 +1,87 @@
-# Project Template
+# Beverage Controller Example
 
-This is a Java Maven Project Template
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)  
+  
+Christopher D. Canfield  
+BU MET CS 665 Group 5
 
+![Beverage Controller UI Example](doc/images/gui-execution-example.png "Beverage Controller GUI")
 
-# How to compile the project
-
-
-[![Build Status](https://travis-ci.org/kiat/JavaProjectTemplate.svg?branch=master)](https://travis-ci.org/kiat/JavaProjectTemplate)  
-
-[![Coverage Status](https://coveralls.io/repos/github/kiat/JavaProjectTemplate/badge.svg?branch=master)](https://coveralls.io/github/kiat/JavaProjectTemplate?branch=master)
-
-[![sonarcloud](https://sonarcloud.io/api/project_badges/measure?project=edu.bu.cs665%3AExample-1&metric=alert_status)](file:https://sonarcloud.io/api/project_badges/measure?project=edu.bu.cs665%3AExample-1&metric=alert_status)
-
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+## Overview
 
 
-We use Apache Maven to compile and run this project. 
 
-You need to install Apache Maven (https://maven.apache.org/)  on your system. 
+## Design
 
-Type on the command line: 
+### Assumptions
+
+* 
+
+### Design
+
+
+### UML
+
+**Core Relationships**
+
+![UML Class Diagram: Overview](doc/images/class-diagram-overview.png "UML Class Diagram: Overview")
+
+### Design Patterns
+
+**Observer**
+* `BeverageControllerObserver <--> BeverageController`: Any class that implements the BeverageControllerObserver interface can subscribe to events that are issued by a BeverageController. Any BeverageControllerObserver can subscribe to any BeverageController (which currently only includes one concrete class: the HotBeverageController). In this implementation, the Main and GuiApp classes implement the BeverageControllerObserver interface, and subscribe to the HotBeverageController's events. Future classes that could benefit from this could include a console UI and a logging class.
+* `GuiApp <--> JFrame`: In addition to implementing the BeverageController interface, GuiApp implements the MouseListener, KeyListener and MouseMotionListener observer interfaces, which allows it to receive events from a Swing JFrame. 
+  
+**Builder**  
+**Factory: Beverage.recipe()**  
+**Command**  
+**Composite**   
+
+### Notes
+
+**
+
+**Why wasn't Java Beans style naming used for getters (get*)?**  
+
+getX(), getY() is perfectly fine. But it's not required. For an explanation, I'll refer you to Joshua Bloch, *Effective Java: Third Edition*, p. 291: 
+> Methods that return a non-boolean function or attribute of the object on which they're invoked are usually named with a noun, a noun phrase, or a verb phrase beginning with the verb get, for example, `size`, `hashCode`, or `getTime`. There is a vocal contingent that claims that only the third form (beginning with get) is acceptable, but there is little basis for this claim. The first two forms usually lead to more readable code ...
+
+**What are the flaws in this design and implementation?**
+
+Yes, definitely. Beverage should probably be an interface, for example. The Swing code is probably also not ideal, since I don't have much experience with Swing (RIP, JavaFX). Unlike the core program, which has unit tests that are approaching 100% code coverage according to EclEmma, the GUI has no automated tests, and has only been manually tested. These are issues to address in a future release.
+
+
+## Compiling & Running
+
+Instructions on compiling and running the program using Apache Maven: 
+
+### How to compile
 
 ```bash
 mvn clean compile
 ```
 
-# How to create a binary runnable package 
-
-
-```bash
-mvn clean compile assembly:single
-```
-
-
-# How to run
+### How to run the unit tests
 
 ```bash
-mvn compile exec:java -Dexec.executable="edu.bu.met.cs665.Main" -Dlog4j.configuration="file:log4j.properties"
+mvn clean test
 ```
 
+### How to run
+
+
+Running the automated command line version:
 
 ```bash
-java -Dlog4j.configuration=file:log4j.properties -classpath target/Example-1-1.0-SNAPSHOT-jar-with-dependencies.jar edu.bu.met.cs665.Main
+mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.Main" -Dlog4j.configuration="file:log4j.properties"
 ```
 
-
-# Using Findbugs 
-
-To see bug detail using the Findbugs GUI, use the following command "mvn findbugs:gui"
-
-Or you can create a XML report by using  
-
+Running the GUI version:
 
 ```bash
-mvn findbugs:gui 
+mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.gui.GuiApp" -Dlog4j.configuration="file:log4j.properties"
 ```
 
-or 
-
-
-```bash
-mvn findbugs:findbugs
-```
-
-# Run Checkstyle 
-
-CheckStyle code styling configuration files are in config/ directory. Maven checkstyle plugin is set to use google code style. 
-You can change it to other styles like sun checkstyle. 
-
-To analyze this example using CheckStyle run 
-
-```bash
-mvn checkstyle:check
-```
-
-This will generate a report in XML format
-
-
-```bash
-target/checkstyle-checker.xml
-target/checkstyle-result.xml
-```
-
-and the following command will generate a report in HTML format that you can open it using a Web browser. 
-
-```bash
-mvn checkstyle:checkstyle
-```
-
-```bash
-target/site/checkstyle.html
-```
-
-
-# Generate  coveralls:report 
-
-```bash
-mvn -DrepoToken=YOUR-REPO-TOCKEN-ON-COVERALLS  cobertura:cobertura coveralls:report
-```
+Esc exits the GUI version of the application.
 
 

@@ -70,6 +70,7 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   @Override
   public CompletedOrder call() throws Exception {
     Recipe recipe = orders.pop();
+    // In a real system, we would execute the order here.
     return new CompletedOrder(this, recipe, Instant.now());
   }
 
