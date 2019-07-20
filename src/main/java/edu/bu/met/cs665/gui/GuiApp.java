@@ -10,6 +10,8 @@ import edu.bu.met.cs665.bev.controller.EspressoBeverage;
 import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
 import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
 import edu.bu.met.cs665.bev.controller.LatteMacchiatoBeverage;
+import edu.bu.met.cs665.bev.controller.MilkCondiment;
+import edu.bu.met.cs665.bev.controller.SugarCondiment;
 import edu.bu.met.cs665.bev.controller.YellowTeaBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
@@ -31,7 +33,9 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -63,9 +67,11 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   private JFrame window;
   
   private ResourceManager resourceManager = new ResourceManager();
-  private Image currentMachineImage;
-  private Image currentMilkQuantityImage;
-  private Image currentSugarQuantityImage;
+  private Image machineImage;
+  
+  private ImageId submittedDrinkId;
+  private boolean drawDrink = false;
+  private Map<Class<? extends Beverage>, ImageId> beverageToId = createBeverageToIdMap();
   
   private List<Button> buttons = new ArrayList<Button>();
   private Spinner<Integer> milkSpinner;
@@ -82,11 +88,9 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     controller = new HotDrinkBeverageController(hardwareInterface);
     // Subscribe to BeverageController events.
     controller.addObserver(this);
-
+    
     // Load the initial images.
-    currentMachineImage = resourceManager.getImage(ImageId.MACHINE);
-    currentMilkQuantityImage = resourceManager.getImage(ImageId.CHAR_0);
-    currentSugarQuantityImage = resourceManager.getImage(ImageId.CHAR_0);
+    machineImage = resourceManager.getImage(ImageId.MACHINE);
     
     createWindow();
     addButtons();
@@ -96,12 +100,31 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     window.setVisible(true);
   }
   
+  private static Map<Class<? extends Beverage>, ImageId> createBeverageToIdMap() {
+    // This would look nicer in Java 9+, since we could use Map.of().
+    Map<Class<? extends Beverage>, ImageId> map = new HashMap<>();
+    map.put(AmericanoBeverage.class, ImageId.DRINK_AMERICANO);
+    map.put(EspressoBeverage.class, ImageId.DRINK_ESPRESSO);
+    map.put(LatteMacchiatoBeverage.class, ImageId.DRINK_LATTE_MACCHIATO);
+    map.put(BlackTeaBeverage.class, ImageId.DRINK_BLACK_TEA);
+    map.put(GreenTeaBeverage.class, ImageId.DRINK_GREEN_TEA);
+    map.put(YellowTeaBeverage.class, ImageId.DRINK_YELLOW_TEA);
+    return map;
+  }
+  
   private void addButtons() {
     // Brew button
     buttons.add(new Button(159, 358, 98, 47, () -> {
-      logger.debug("Brew button clicked. Submitting order.");
-      // TODO (2019-07-18): Make this changeable.
-      BeverageOrder order = new BeverageOrder(new GreenTeaBeverage());
+      // Create the order.
+      BeverageOrder order = new BeverageOrder(beverageSpinner.itemValue());
+      for (int i = 0; i < milkSpinner.itemValue().intValue(); i++) {
+        order.addCondiment(new MilkCondiment());
+      }
+      for (int i = 0; i < sugarSpinner.itemValue().intValue(); i++) {
+        order.addCondiment(new SugarCondiment());
+      }
+      
+      logger.info(GuiApp.class.getSimpleName() + ": Brew button clicked. Submitting order: " + order);
       controller.submitOrder(order);
     }));
     
@@ -144,23 +167,26 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
         .addItem(2, ImageId.CHAR_2)
         .addItem(3, ImageId.CHAR_3);
     
+    // Create the milk spinner.
     milkSpinner = condimentBuilder
         .setUpButtonRect(new Rectangle(229, 276, 31, 34))
         .setDownButtonRect(new Rectangle(178, 276, 31, 34))
-        .setItemPosition(new Point(210, 318))
+        .setItemPosition(new Point(202, 275))
         .build();
     
+    // Create the sugar spinner.
     sugarSpinner = condimentBuilder
         .setUpButtonRect(new Rectangle(229, 313, 31, 34))
         .setDownButtonRect(new Rectangle(178, 313, 31, 34))
-        .setItemPosition(new Point(210, 318))
+        .setItemPosition(new Point(202, 310))
         .build();
     
+    // Create the beverage spinner.
     beverageSpinner = new Spinner.Builder<Beverage>()
         .setResourceManager(resourceManager)
         .setUpButtonRect(new Rectangle(312, 235, 31, 34))
         .setDownButtonRect(new Rectangle(178, 235, 31, 34))
-        .setItemPosition(new Point(163, 241))
+        .setItemPosition(new Point(163, 238))
         .addItem(new AmericanoBeverage(), ImageId.TEXT_AMERICANO)
         .addItem(new EspressoBeverage(), ImageId.TEXT_ESPRESSO)
         .addItem(new LatteMacchiatoBeverage(), ImageId.TEXT_LATTE_MACCHIATO)
@@ -181,22 +207,43 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     window.add(this);
 
     window.setLocationRelativeTo(null);
-    window.setVisible(true);
   }
   
   @Override
   public void paint(Graphics g) {
-    g.drawImage(currentMachineImage, 0, 0, null);
-    g.drawImage(currentMilkQuantityImage, 203, 275, null);
-    g.drawImage(currentSugarQuantityImage, 203, 311, null);
+    g.drawImage(machineImage, 0, 0, null);
     
+    if (submittedDrinkId != null && drawDrink) {
+      try {
+        g.drawImage(resourceManager.getImage(submittedDrinkId), 
+            182, 425, null);
+      } catch (IOException e) {
+        logger.error("Unable to load drink image: " + e);
+      }
+    }
+
+    try {
+      beverageSpinner.paint(g);
+      milkSpinner.paint(g);
+      sugarSpinner.paint(g);
+    } catch (IOException e) {
+      logger.error("Unable to load spinner image: " + e);
+    }
   }
 
   @Override
   public void mouseClicked(MouseEvent e) {
     logger.debug("MouseClicked: " + e.getX() + "," + e.getY());
     
-    buttons.forEach(button -> button.executeIfContains(e.getPoint()));
+    Point point = e.getPoint();
+    buttons.forEach(button -> button.executeIfContains(point));
+    beverageSpinner.executeIfContains(point);
+    milkSpinner.executeIfContains(point);
+    sugarSpinner.executeIfContains(point);
+    
+    // Redraw the images.
+    repaint();
+    revalidate();
   }
   
   
@@ -246,7 +293,16 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
 
   @Override
   public void onOrderReceived(BeverageController controller, BeverageOrder order) {
-    logger.info("Beverage Controller reports that is has received an order.");
+    logger.info("Beverage Controller reports that is has received an order: " + order);
+    
+    SwingUtilities.invokeLater(() -> {
+      submittedDrinkId = beverageToId.get(order.beverage().getClass());
+      drawDrink = false;
+      
+      // Redraw the image.
+      repaint();
+      revalidate();
+    });
   }
 
   @Override
@@ -256,13 +312,12 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
 
   @Override
   public void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder) {
-    logger.info("Beverage Controller reports that beverage is ready.");
+    logger.info(String.format("Beverage Controller reports that beverage is ready at %s. Order " + 
+          "hardware command was %s", completedOrder.finishedAtTime(), 
+          completedOrder.recipe().hardwareCommand()));
+    
     SwingUtilities.invokeLater(() -> {
-      try {
-        currentMachineImage = resourceManager.getImage(ImageId.MACHINE_WITH_DRINK);
-      } catch (IOException e) {
-        logger.error("Error loading " + ImageId.MACHINE_WITH_DRINK.path() + ": " + e.toString());
-      }
+      drawDrink = true;
       
       // Redraw the image.
       repaint();

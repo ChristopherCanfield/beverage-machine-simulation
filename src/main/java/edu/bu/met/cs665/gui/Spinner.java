@@ -25,9 +25,7 @@ public class Spinner<T> {
   private int itemIndex = 0;
   private final Point itemPosition;
   
-  private Image valueImage;
-  
-  private Spinner(Builder<T> builder) throws IOException {
+  private Spinner(Builder<T> builder) {
     upButton = new Button(builder.upButtonRect, this::onUpButtonClicked);
     downButton = new Button(builder.downButtonRect, this::onDownButtonClicked);
     
@@ -36,8 +34,6 @@ public class Spinner<T> {
     this.itemPosition = (Point) builder.itemPosition.clone();
     
     this.items = builder.items;
-
-    valueImage = resourceManager.getImage(items.get(itemIndex).imageId);
   }
   
   private void onUpButtonClicked() {
@@ -67,9 +63,15 @@ public class Spinner<T> {
   /**
    * Draws the Spinner's value.
    * @param g a reference to the graphics context.
+   * @throws IOException 
    */
-  public void paint(Graphics g) {
-    g.drawImage(valueImage, itemPosition.x, itemPosition.y, null);
+  public void paint(Graphics g) throws IOException {
+    Image image = resourceManager.getImage(items.get(itemIndex).imageId);
+    g.drawImage(image, itemPosition.x, itemPosition.y, null);
+  }
+  
+  public T itemValue() {
+    return items.get(itemIndex).value;
   }
   
   
@@ -132,10 +134,9 @@ public class Spinner<T> {
     /**
      * Constructs a spinner using the arguments set in this builder. All fields are required.
      * @return the spinner.
-     * @throws IOException if the specified images do not exist.
      * @throws IllegalStateException if all fields have not been set.
      */
-    public Spinner<T> build() throws IOException {
+    public Spinner<T> build() {
       checkState(upButtonRect != null);
       checkState(downButtonRect != null);
       checkState(resourceManager != null);

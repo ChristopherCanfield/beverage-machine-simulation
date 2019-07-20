@@ -17,17 +17,25 @@ import javax.imageio.ImageIO;
 public class ResourceManager {
   public enum ImageId {
     MACHINE("beverage-machine.png"),
-    MACHINE_WITH_DRINK("beverage-machine-with-drink.png"),
+    
     CHAR_0("char-0.png"),
     CHAR_1("char-1.png"),
     CHAR_2("char-2.png"),
     CHAR_3("char-3.png"),
-    TEXT_LATTE_MACCHIATO("text-latte-macchiato.png"),
+    
     TEXT_AMERICANO("text-americano.png"),
     TEXT_ESPRESSO("text-espresso.png"),
-    TEXT_GREEN_TEA("text-green-tea.png"),
+    TEXT_LATTE_MACCHIATO("text-latte-macchiato.png"),
     TEXT_BLACK_TEA("text-black-tea.png"),
-    TEXT_YELLOW_TEA("text-yellow-tea.png");
+    TEXT_GREEN_TEA("text-green-tea.png"),
+    TEXT_YELLOW_TEA("text-yellow-tea.png"),
+    
+    DRINK_AMERICANO("drink-americano.png"),
+    DRINK_ESPRESSO("drink-espresso.png"),
+    DRINK_LATTE_MACCHIATO("drink-latte-macchiato.png"),
+    DRINK_BLACK_TEA("drink-black-tea.png"),
+    DRINK_GREEN_TEA("drink-green-tea.png"),
+    DRINK_YELLOW_TEA("drink-yellow-tea.png");
     
     private final String path;
     
