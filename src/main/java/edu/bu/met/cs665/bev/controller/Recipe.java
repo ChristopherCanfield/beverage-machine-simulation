@@ -3,6 +3,7 @@ package edu.bu.met.cs665.bev.controller;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +110,8 @@ public class Recipe {
     }
     
     /**
-     * Sets the temperature, in Fahrenheit. Must be within the range of 0 and 300, inclusive. Required.
+     * Sets the temperature, in Fahrenheit. Must be within the range of 0 and 300, inclusive. 
+     * Required.
      * @param temperature the temperature, in Fahrenheit.
      * @return reference to this builder.
      */
@@ -135,12 +137,16 @@ public class Recipe {
     /**
      * Constructs the recipe.
      * @return a recipe using the settings provided to this builder.
-     * @throws IllegalStateException when the typeIndicator, subtypeIndicator, or temperatureFahrenheit have not been set.
+     * @throws IllegalStateException when the typeIndicator, subtypeIndicator, or 
+     * temperatureFahrenheit have not been set.
      */
     public Recipe build() {
-      checkState(typeIndicator != null, "typeIndicator must be set in the Recipe Builder before calling build().");
-      checkState(subtypeIndicator != null, "subtypeIndicator must be set in the Recipe Builder before calling build().");
-      checkState(temperatureFahrenheit != INVALID_TEMP, "temperatureFahrenheit must be set in the Recipe Builder before calling build().");
+      checkState(typeIndicator != null, 
+          "typeIndicator must be set in the Recipe Builder before calling build().");
+      checkState(subtypeIndicator != null, 
+          "subtypeIndicator must be set in the Recipe Builder before calling build().");
+      checkState(temperatureFahrenheit != INVALID_TEMP, 
+          "temperatureFahrenheit must be set in the Recipe Builder before calling build().");
       
       return new Recipe(this);
     }

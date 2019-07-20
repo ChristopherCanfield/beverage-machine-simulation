@@ -1,7 +1,7 @@
 package edu.bu.met.cs665.bev.controller;
 
 /**
- * Interface for beverage controllers, 
+ * Interface for beverage controllers.
  * 
  * @author Christopher D. Canfield
  */
