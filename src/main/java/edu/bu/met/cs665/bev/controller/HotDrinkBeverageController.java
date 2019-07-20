@@ -20,7 +20,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * 
  * @author Christopher D. Canfield
  */
-public class HotDrinkBeverageController implements BeverageController, FutureCallback<CompletedOrder> {
+public class HotDrinkBeverageController implements 
+    BeverageController, FutureCallback<CompletedOrder> {
   private static final int MAX_MILK = 3;
   private static final int MAX_SUGAR = 3;
   
@@ -29,10 +30,10 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   
   // While an array list would be a logical choice here, I used a hashset to prevent an observer 
   // from being stored and notified multiple times.
-  // This is thread-safe, because the HardwareInterface may cause events that are reported on other threads.
+  // This must be thread-safe, because the HardwareInterface may cause events that are 
+  // reported on other threads.
   private Set<BeverageControllerObserver> observers = Collections.newSetFromMap(
       new ConcurrentHashMap<BeverageControllerObserver, Boolean>());
-  
   
   /**
    * Constructs a new BeverageController that uses the specified hardware interface.
@@ -54,7 +55,8 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
     
     BeverageOrder verifiedOrder = verifyOrder(order);
     
-    ListenableFuture<CompletedOrder> orderFuture = hardwareInterface.makeRecipe(verifiedOrder.toRecipe());
+    ListenableFuture<CompletedOrder> orderFuture = 
+        hardwareInterface.makeRecipe(verifiedOrder.toRecipe());
     Futures.addCallback(orderFuture, this, MoreExecutors.directExecutor());
   }
   
@@ -82,8 +84,9 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
       int finalMilkOrder = Math.min(milkOrder, MAX_MILK);
       int finalSugarOrder = Math.min(sugarOrder, MAX_SUGAR);
       
-      String message = String.format("Too many condiments in order. Milk: %d; Sugar: %d. Adjusting order to %d milk & %d sugar.", 
-          milkOrder, sugarOrder, finalMilkOrder, finalSugarOrder);
+      String message = String.format("Too many condiments in order. Milk: %d; Sugar: %d. " 
+            + "Adjusting order to %d milk & %d sugar.", 
+            milkOrder, sugarOrder, finalMilkOrder, finalSugarOrder);
       notifyObservers(observer -> observer.onTooManyCondimentsOrdered(this, message));
       
       BeverageOrder revisedOrder = new BeverageOrder(order.beverage());
