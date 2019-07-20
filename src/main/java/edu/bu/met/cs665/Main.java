@@ -1,6 +1,5 @@
 package edu.bu.met.cs665;
 
-import org.apache.log4j.Logger;
 import edu.bu.met.cs665.bev.controller.AmericanoBeverage;
 import edu.bu.met.cs665.bev.controller.BeverageController;
 import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
@@ -14,6 +13,8 @@ import edu.bu.met.cs665.bev.controller.YellowTeaBeverage;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
+
+import org.apache.log4j.Logger;
 
 /**
  * Used to test the Hot Beverage Controller. Results are output to the logger.

@@ -1,5 +1,15 @@
 package edu.bu.met.cs665.gui;
 
+import edu.bu.met.cs665.bev.controller.BeverageController;
+import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
+import edu.bu.met.cs665.bev.controller.BeverageOrder;
+import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
+import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
+import edu.bu.met.cs665.bev.hardware.CompletedOrder;
+import edu.bu.met.cs665.bev.hardware.HardwareInterface;
+import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
+import edu.bu.met.cs665.gui.ResourceManager.ImageId;
+
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,19 +24,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
 import org.apache.log4j.Logger;
-import edu.bu.met.cs665.bev.controller.BeverageController;
-import edu.bu.met.cs665.bev.controller.BeverageControllerObserver;
-import edu.bu.met.cs665.bev.controller.BeverageOrder;
-import edu.bu.met.cs665.bev.controller.GreenTeaBeverage;
-import edu.bu.met.cs665.bev.controller.HotDrinkBeverageController;
-import edu.bu.met.cs665.bev.hardware.CompletedOrder;
-import edu.bu.met.cs665.bev.hardware.HardwareInterface;
-import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
-import edu.bu.met.cs665.gui.ResourceManager.ImageId;
 
 /**
  * A GUI interface for the Beverage Controller, which uses Swing as its GUI framework.
