@@ -69,6 +69,7 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
     // Subscribe to BeverageController events.
     controller.addObserver(this);
 
+    // Load the initial images.
     currentMachineImage = resourceManager.getImage(ImageId.MACHINE);
     currentMilkQuantityImage = resourceManager.getImage(ImageId.CHAR_0);
     currentSugarQuantityImage = resourceManager.getImage(ImageId.CHAR_0);

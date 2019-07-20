@@ -68,7 +68,7 @@ public class BeverageOrder {
       for (Condiment condiment : condiments) {
         if (firstCondiment) {
           sb.append(" with ");
-          sb.append(condiment);
+          sb.append(condiment.name());
           firstCondiment = false;
         } else {
           sb.append(", ");

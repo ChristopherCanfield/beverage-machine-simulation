@@ -18,6 +18,12 @@ public interface HardwareInterface {
   ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe);
   
   /**
+   * Returns the number of orders that are waiting to be completed.
+   * @return the number of orders that are waiting to be completed.
+   */
+  public int ordersPending();
+  
+  /**
    * Shuts down the hardware interface, and waits for any already submitted orders to be processed, 
    * as long they can be completed before the timeoutMilliseconds expires.
    * @param timeoutMilliseconds the maximum amount of time, in milliseconds, to wait for the orders to finish.

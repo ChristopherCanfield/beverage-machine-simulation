@@ -25,7 +25,7 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   
   private final Deque<Recipe> orders = new LinkedBlockingDeque<>();
   
-  private ListeningScheduledExecutorService createExecutorService() {
+  private static ListeningScheduledExecutorService createExecutorService() {
     ThreadFactory tf = r -> {
       Thread thread = new Thread(r, "HardwareInterface-thread");
       thread.setDaemon(true);
@@ -33,7 +33,6 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
     };
     return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(tf));
   }
-  
   
   /**
    * Constructs a new MockHardwareInterface that uses the specified delay in milliseconds to simulate
@@ -47,6 +46,11 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   }
   
   @Override
+  public int ordersPending() {
+    return orders.size();
+  }
+  
+  @Override
   public boolean waitForCompletion(int timeoutMilliseconds) throws InterruptedException {
     executor.shutdown();
     executor.awaitTermination(timeoutMilliseconds, TimeUnit.MILLISECONDS);
@@ -55,7 +59,7 @@ public class MockHardwareInterface implements HardwareInterface, Callable<Comple
   
   @Override
   public ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe) {
-    orders.push(recipe);
+    orders.addLast(recipe);
     return executor.schedule(this, delayMilliseconds, TimeUnit.MILLISECONDS);
   }
 

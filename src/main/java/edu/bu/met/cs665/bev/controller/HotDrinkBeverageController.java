@@ -105,13 +105,17 @@ public class HotDrinkBeverageController implements BeverageController, FutureCal
   @Override
   public void onSuccess(@Nullable CompletedOrder result) {
     notifyObservers(observer -> observer.onOrderCompleted(this, result));
-    changeState(State.READY);
+    if (hardwareInterface.ordersPending() == 0) {
+      changeState(State.READY);
+    }
   }
 
   @Override
   public void onFailure(Throwable t) {
     notifyObservers(observer -> observer.onOrderFailed(this, t));
-    changeState(State.READY);
+    if (hardwareInterface.ordersPending() == 0) {
+      changeState(State.READY);
+    }
   }
   
   
