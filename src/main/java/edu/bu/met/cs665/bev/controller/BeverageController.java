@@ -33,11 +33,11 @@ public interface BeverageController {
    * Adds the specified observer to this beverage controller.
    * @param observer the observer to add.
    */
-   public void addObserver(BeverageControllerObserver observer);
+  public void addObserver(BeverageControllerObserver observer);
    
-   /**
+  /**
    * Removes the specified observer from this beverage controller. If the 
    * @param observer the observer to remove.
    */
-   public void removeObserver(BeverageControllerObserver observer);
+  public void removeObserver(BeverageControllerObserver observer);
 }

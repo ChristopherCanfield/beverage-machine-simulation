@@ -112,7 +112,7 @@ public class Main implements BeverageControllerObserver {
   }
   
   private void testBeverageOrder(BeverageOrder order) {
- logger.info("Main: BeverageController's current state is " + controller.state());
+    logger.info("Main: BeverageController's current state is " + controller.state());
     logger.info("Main: Submitting order to BeverageController: " + order);
     controller.submitOrder(order);
   }

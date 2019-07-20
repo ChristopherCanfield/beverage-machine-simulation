@@ -138,7 +138,7 @@ public class Recipe {
      * Constructs the recipe.
      * @return a recipe using the settings provided to this builder.
      * @throws IllegalStateException when the typeIndicator, subtypeIndicator, or 
-     * temperatureFahrenheit have not been set.
+     *      temperatureFahrenheit have not been set.
      */
     public Recipe build() {
       checkState(typeIndicator != null, 
