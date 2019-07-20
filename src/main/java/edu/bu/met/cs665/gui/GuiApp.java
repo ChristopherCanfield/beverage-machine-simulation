@@ -156,16 +156,20 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   //// MouseEventListener events ////
 
   @Override
-  public void mouseEntered(MouseEvent e) {}
+  public void mouseEntered(MouseEvent e) {
+  }
 
   @Override
-  public void mouseExited(MouseEvent e) {}
+  public void mouseExited(MouseEvent e) {
+  }
 
   @Override
-  public void mousePressed(MouseEvent e) {}
+  public void mousePressed(MouseEvent e) {
+  }
 
   @Override
-  public void mouseReleased(MouseEvent e) {}
+  public void mouseReleased(MouseEvent e) {
+  }
 
   
   //// KeyEventListener events ////
@@ -178,10 +182,12 @@ public class GuiApp extends Component implements MouseListener, KeyListener, Bev
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {}
+  public void keyReleased(KeyEvent e) {
+  }
 
   @Override
-  public void keyTyped(KeyEvent e) {}
+  public void keyTyped(KeyEvent e) {
+  }
 
   
   //// BeverageControllerObserver events ////
