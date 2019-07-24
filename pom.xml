@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>edu.bu.cs665</groupId>
-	<artifactId>Beverage-Controller-Ex-Group-5</artifactId>
+	<artifactId>Beverage-Controller-CS665-Group-5</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Beverage-Controller-Ex-Group-5</name>
+	<name>Beverage-Controller-CS665-Group-5</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -37,6 +37,7 @@
 	<build>
 
 		<plugins>
+		
 			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
