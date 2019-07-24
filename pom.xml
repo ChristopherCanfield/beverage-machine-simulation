@@ -75,7 +75,7 @@
 					<includeProjectDependencies>true</includeProjectDependencies>
 					<includePluginDependencies>true</includePluginDependencies>
 					<killAfter>-1</killAfter>
-					<mainClass>edu.bu.met.cs665.Main</mainClass>
+					<!-- <mainClass>edu.bu.met.cs665.Main</mainClass> -->
 					<cleanupDaemonThreads>false</cleanupDaemonThreads>
 				</configuration>
 			</plugin>
