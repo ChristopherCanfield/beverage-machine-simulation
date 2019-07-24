@@ -162,22 +162,18 @@ public class GuiApp extends Component implements
   }
   
   private void addSpinners() throws IOException {
-    Spinner.Builder<Integer> condimentBuilder = new Spinner.Builder<Integer>()
-        .setResourceManager(resourceManager)
-        .addItem(0, ImageId.CHAR_0)
-        .addItem(1, ImageId.CHAR_1)
-        .addItem(2, ImageId.CHAR_2)
-        .addItem(3, ImageId.CHAR_3);
+	// Create a condimentBuilder prototype.
+    Spinner.Builder<Integer> condimentBuilder = createCondimentBuilderPrototype(resourceManager);
     
     // Create the milk spinner.
-    milkSpinner = condimentBuilder
+    milkSpinner = condimentBuilder.clone()
         .setUpButtonRect(new Rectangle(229, 276, 31, 34))
         .setDownButtonRect(new Rectangle(178, 276, 31, 34))
         .setItemPosition(new Point(202, 275))
         .build();
     
     // Create the sugar spinner.
-    sugarSpinner = condimentBuilder
+    sugarSpinner = condimentBuilder.clone()
         .setUpButtonRect(new Rectangle(229, 313, 31, 34))
         .setDownButtonRect(new Rectangle(178, 313, 31, 34))
         .setItemPosition(new Point(202, 310))
@@ -196,6 +192,15 @@ public class GuiApp extends Component implements
         .addItem(new GreenTeaBeverage(), ImageId.TEXT_GREEN_TEA)
         .addItem(new YellowTeaBeverage(), ImageId.TEXT_YELLOW_TEA)
         .build();
+  }
+  
+  private static Spinner.Builder<Integer> createCondimentBuilderPrototype(ResourceManager rm) {
+	  return new Spinner.Builder<Integer>()
+		        .setResourceManager(rm)
+		        .addItem(0, ImageId.CHAR_0)
+		        .addItem(1, ImageId.CHAR_1)
+		        .addItem(2, ImageId.CHAR_2)
+		        .addItem(3, ImageId.CHAR_3);
   }
   
   private void createWindow() {

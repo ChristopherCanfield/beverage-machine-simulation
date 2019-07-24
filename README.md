@@ -10,6 +10,7 @@ BU MET CS 665 Group 5
 ## Overview
 
 
+
 ## Design
 
 ### Assumptions
@@ -20,7 +21,12 @@ BU MET CS 665 Group 5
 ### UML
 
 
-### 
+### Design Patterns
+
+Observer  
+Builder  
+Command  
+Composite  
 
 ### Notes & Comments
 

@@ -3,7 +3,7 @@ package edu.bu.met.cs665.bev.controller;
 import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 
 /**
- * A beverage controller that tracks whether it has received notifications.
+ * A beverage controller observer that tracks whether it has received notifications.
  * 
  * @author Christopher D. Canfield
  */
