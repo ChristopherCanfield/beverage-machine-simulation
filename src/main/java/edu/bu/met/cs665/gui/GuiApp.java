@@ -161,6 +161,18 @@ public class GuiApp extends Component implements
     buttons.add(new Button(229, 313, 31, 34, () -> {
       logger.debug("Sugar up clicked.");
     }));
+
+    // Beverage: click to remove an existing drink.
+    buttons.add(new Button(181, 434, 50, 66, () -> {
+      logger.debug("Beverage removed.");
+
+      // Remove the drink, if it exists.
+      drawDrink = false;
+
+      // Redraw the image.
+      repaint();
+      revalidate();
+    }));
   }
 
   private void addSpinners() throws IOException {
