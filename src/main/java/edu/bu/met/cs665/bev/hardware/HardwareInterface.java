@@ -16,7 +16,7 @@ public interface HardwareInterface {
    * @param recipe the recipe to make.
    * @return a future that will contain the completed order, once the drink has been made.
    */
-  ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe);
+  public ListenableFuture<CompletedOrder> makeRecipe(Recipe recipe);
   
   /**
    * Returns the number of orders that are waiting to be completed.

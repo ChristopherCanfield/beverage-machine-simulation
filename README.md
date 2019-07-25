@@ -20,6 +20,7 @@ BU MET CS 665 Group 5
 
 ### UML
 
+![UML Class Diagram: Overview](doc/images/class-diagram-overview.png "UML Class Diagram: Overview")
 
 ### Design Patterns
 
