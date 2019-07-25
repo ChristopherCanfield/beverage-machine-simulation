@@ -24,12 +24,26 @@ BU MET CS 665 Group 5
 
 ### Design Patterns
 
-Observer  
-Builder  
-Command  
-Composite  
+**Observer**
+* `BeverageControllerObserver <--> BeverageController`: Any class that implements the BeverageControllerObserver interface can subscribe to events that are issued by a BeverageController. Any BeverageControllerObserver can subscribe to any BeverageController (which currently only includes one concrete class: the HotBeverageController). In this implementation, the Main and GuiApp classes implement the BeverageControllerObserver interface, and subscribe to the HotBeverageController's events. Future classes that could benefit from this could include a console UI and a logging class.
+* `GuiApp <--> JFrame`: In addition to implementing the BeverageController interface, GuiApp implements the MouseListener, KeyListener and MouseMotionListener observer interfaces, which allows it to receive events from a Swing JFrame. 
+  
+**Builder**  
+**Factory: Beverage.recipe()**  
+**Command**  
+**Composite**   
 
-### Notes & Comments
+### FAQ
+
+**Why wasn't Java Beans style naming used for getters (get*)?**  
+
+getX(), getY() is perfectly fine. But it's not required. For an explanation, I'll refer you to Joshua Bloch, *Effective Java: Third Edition*, p. 291: 
+> Methods that return a non-boolean function or attribute of the object on which they're invoked are usually named with a noun, a noun phrase, or a verb phrase beginning with the verb get, for example, `size`, `hashCode`, or `getTime`. There is a vocal contingent that claims that only the third form (beginning with get) is acceptable, but there is little basis for this claim. The first two forms usually lead to more readable code ...
+ 
+**Are there flaws in this design?**
+
+Yes, definitely. Beverage should probably be an interface, for example. The Swing code is probably also not ideal, since I don't have much experience with Swing (RIP, JavaFX). Unlike the core program, which has unit tests that are approaching 100% code coverage according to EclEmma, the GUI has no automated tests, and has only been manually tested. These are issues to address in a future release.
+
 
 ## Compiling & Running
 
