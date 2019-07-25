@@ -110,6 +110,12 @@ public class HotDrinkBeverageControllerTest {
     assertTrue(observer.wasOnOrderCompletedCalled());
   }
   
+  @Test
+  public void onFailure_onOrderFailed() {
+    controller.onFailure(new RuntimeException());
+    assertTrue(observer.wasOnOrderFailedCalled());
+  }
+  
   
   ////Observer Tests ////
   
