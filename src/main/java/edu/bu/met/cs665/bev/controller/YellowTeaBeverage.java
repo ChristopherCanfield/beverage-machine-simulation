@@ -19,7 +19,7 @@ public class YellowTeaBeverage extends TeaBeverage {
   }
 
   @Override
-  Recipe recipe() {
+  protected Recipe recipe() {
     return recipe;
   }
 }

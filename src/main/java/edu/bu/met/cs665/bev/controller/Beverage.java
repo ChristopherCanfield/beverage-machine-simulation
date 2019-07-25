@@ -27,5 +27,5 @@ public abstract class Beverage {
    * The beverage's recipe.
    * @return the beverage's recipe.
    */
-  abstract Recipe recipe();
+  protected abstract Recipe recipe();
 }

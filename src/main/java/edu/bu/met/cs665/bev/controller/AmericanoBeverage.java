@@ -19,7 +19,7 @@ public class AmericanoBeverage extends CoffeeBeverage {
   }
 
   @Override
-  Recipe recipe() {
+  protected Recipe recipe() {
     return recipe;
   }
 }
