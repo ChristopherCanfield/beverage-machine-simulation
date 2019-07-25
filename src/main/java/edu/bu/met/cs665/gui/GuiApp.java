@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -48,8 +49,9 @@ import org.apache.log4j.Logger;
  * 
  * @author Christopher D. Canfield
  */
-public class GuiApp extends Component implements 
-    MouseListener, KeyListener, BeverageControllerObserver  {
+public class GuiApp extends Component implements
+	BeverageControllerObserver,
+    MouseListener, KeyListener, MouseMotionListener {
   private static final long serialVersionUID = 1L;
   
   private static final Logger logger = Logger.getLogger(GuiApp.class);
@@ -211,6 +213,7 @@ public class GuiApp extends Component implements
     
     window.addKeyListener(this);
     window.addMouseListener(this);
+    window.addMouseMotionListener(this);
     window.add(this);
 
     window.setLocationRelativeTo(null);
@@ -238,6 +241,9 @@ public class GuiApp extends Component implements
     }
   }
 
+  
+  //// MouseEventListener events ////
+
   @Override
   public void mouseClicked(MouseEvent e) {
     logger.debug("MouseClicked: " + e.getX() + "," + e.getY());
@@ -253,9 +259,6 @@ public class GuiApp extends Component implements
     revalidate();
   }
   
-  
-  //// MouseEventListener events ////
-
   @Override
   public void mouseEntered(MouseEvent e) {
   }
@@ -270,6 +273,21 @@ public class GuiApp extends Component implements
 
   @Override
   public void mouseReleased(MouseEvent e) {
+  }
+  
+  
+  //// MouseListener events ////
+  
+  // Make the window moveable.
+  @Override
+  public void mouseDragged(MouseEvent e) {
+	int x = e.getXOnScreen() - window.getWidth() / 2;
+	int y = e.getYOnScreen() - window.getHeight() / 2;
+	window.setLocation(x, y);
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e) {
   }
 
   
