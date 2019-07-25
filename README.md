@@ -7,6 +7,19 @@ BU MET CS 665 Group 5
 
 ![Beverage Controller UI Example](doc/images/gui-execution-example.png "Beverage Controller GUI")
 
+1. [Overview](#overview)
+2. [Compiling & Running](#compiling-&-running)
+    1. [How to compile](#how-to-compile)
+    2. [How to run the unit tests](#how-to-run-the-unit-tests)
+    3. [How to run](#how-to-run)
+    4. [Example runs](#example-runs)
+3. [Design](#design)
+    1. [Assumptions](#assumptions)
+    2. [UML](#uml)
+    3. [Design Patterns](#design-patterns)
+    4. [Notes](#notes)
+
+
 ## Overview
 
 We have a seen a number of excellent, small-scale examples so far in this course. That is a great way to learn the patterns, because small-scale examples allow us to more easily focus on the design, and not get lost in irrelevant details.
@@ -247,7 +260,7 @@ As of July 25, 2019:
 
 Main and the GUI are not currently covered by automated tests.
 
-**Why wasn't Java Beans style naming used for getters (get*)?**  
+**Why wasn't Java Beans style naming used for getters (getX/getY)?**  
 
 getX(), getY() is perfectly fine. But it's not required. For an explanation, I'll refer you to Joshua Bloch, *Effective Java: Third Edition*, p. 291: 
 > Methods that return a non-boolean function or attribute of the object on which they're invoked are usually named with a noun, a noun phrase, or a verb phrase beginning with the verb get, for example, `size`, `hashCode`, or `getTime`. There is a vocal contingent that claims that only the third form (beginning with get) is acceptable, but there is little basis for this claim. The first two forms usually lead to more readable code ...
