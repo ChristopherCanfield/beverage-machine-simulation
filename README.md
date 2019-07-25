@@ -50,6 +50,102 @@ mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.gui.GuiApp" -Dlog4j.con
 
 Esc exits the GUI version of the application.
 
+### Example Runs
+
+**Command Line**
+
+```console
+$ mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.Main" -Dlog4j.configuration="file:log4j.properties"
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -----------< edu.bu.cs665:Beverage-Controller-CS665-Group-5 >-----------
+[INFO] Building Beverage-Controller-CS665-Group-5 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ Beverage-Controller-CS665-Group-5 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 17 resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ Beverage-Controller-CS665-Group-5 ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO]
+[INFO] --- exec-maven-plugin:1.3:java (default-cli) @ Beverage-Controller-CS665-Group-5 ---
+Main [INFO]: Main: Welcome to the BeverageController tests.
+Main [INFO]: Main: Constructing the HardwareInterface
+Main [INFO]: Main: Constructing BeverageController
+Main [INFO]: Main: Subscribing to BeverageController's events.
+Main [INFO]:
+Main [INFO]: Main: Constructing new order.
+Main [INFO]: Main: BeverageController's current state is READY
+Main [INFO]: Main: Submitting order to BeverageController: Latte Macchiato
+Main [INFO]: BeverageController received an order: Latte Macchiato
+Main [INFO]: BeverageController's state changed: MAKING_DRINK
+Main [INFO]:
+Main [INFO]: Main: Constructing new order.
+Main [INFO]: Main: BeverageController's current state is MAKING_DRINK
+Main [INFO]: Main: Submitting order to BeverageController: Green Tea with Milk, Milk
+Main [INFO]: BeverageController received an order: Green Tea with Milk, Milk
+Main [INFO]: BeverageController's state changed: MAKING_DRINK
+Main [INFO]:
+Main [INFO]: Main: Constructing second order.
+Main [INFO]: Main: BeverageController's current state is MAKING_DRINK
+Main [INFO]: Main: Submitting order to BeverageController: Americano with Milk, Sugar
+Main [INFO]: BeverageController received an order: Americano with Milk, Sugar
+Main [INFO]: BeverageController's state changed: MAKING_DRINK
+Main [INFO]:
+Main [INFO]: Main: Constructing second order.
+Main [INFO]: Main: BeverageController's current state is MAKING_DRINK
+Main [INFO]: Main: Submitting order to BeverageController: Yellow Tea with Milk, Milk, Milk, Milk
+Main [INFO]: BeverageController received an order: Yellow Tea with Milk, Milk, Milk, Milk
+Main [INFO]: BeverageController's state changed: MAKING_DRINK
+Main [WARN]: BeverageController received too many condiments in order.
+        Message: Too many condiments in order. Milk: 4; Sugar: 0. Adjusting order to 3 milk & 0 sugar.
+Main [INFO]:
+Main [INFO]: Main: Waiting for remaining drinks to be made.
+Main [INFO]: BeverageController reports that the drink was made at 2019-07-25T16:41:27.711429900Z. Hardware command was C:LM:205.
+Main [INFO]: BeverageController reports that the drink was made at 2019-07-25T16:41:27.719427Z. Hardware command was T:GT:175:M:M.
+Main [INFO]: BeverageController reports that the drink was made at 2019-07-25T16:41:27.719427Z. Hardware command was C:A:210:M:S.
+Main [INFO]: BeverageController reports that the drink was made at 2019-07-25T16:41:27.722427600Z. Hardware command was T:YT:170:M:M:M.
+Main [INFO]: BeverageController's state changed: READY
+Main [INFO]: Main: All drinks made. Shutting down.
+Main [INFO]: Main: Exiting BeverageController tests.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.599 s
+[INFO] Finished at: 2019-07-25T12:41:27-04:00
+[INFO] ------------------------------------------------------------------------
+
+```
+
+**GUI**
+
+![GUI Example: Latte](doc/images/gui-example-latte.png "GUI Example: Latte")
+
+```console
+$ mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.gui.GuiApp" -Dlog4j.configuration="file:log4j.properties"
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -----------< edu.bu.cs665:Beverage-Controller-CS665-Group-5 >-----------
+[INFO] Building Beverage-Controller-CS665-Group-5 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ Beverage-Controller-CS665-Group-5 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 17 resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ Beverage-Controller-CS665-Group-5 ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO]
+[INFO] --- exec-maven-plugin:1.3:java (default-cli) @ Beverage-Controller-CS665-Group-5 ---
+GuiApp [INFO]: GuiApp: Brew button clicked. Submitting order: Latte Macchiato with Milk, Sugar, Sugar, Sugar
+GuiApp [INFO]: Beverage Controller reports that is has received an order: Latte Macchiato with Milk, Sugar, Sugar, Sugar
+GuiApp [INFO]: Beverage Controller reports that its state has changed to MAKING_DRINK
+GuiApp [INFO]: Beverage Controller reports that beverage is ready at 2019-07-25T16:44:12.428760200Z. Order hardware command was C:LM:205:M:S:S:S
+GuiApp [INFO]: Beverage Controller reports that its state has changed to READY
+
+```
+
 
 ## Design
 
