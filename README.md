@@ -16,8 +16,9 @@ BU MET CS 665 Group 5
 3. [Design](#design)
     1. [Assumptions](#assumptions)
     2. [UML](#uml)
-    3. [Design Patterns](#design-patterns)
-    4. [Notes](#notes)
+    3. [API Documentation](#api-documentation) 
+    4. [Design Patterns](#design-patterns)
+    5. [Notes](#notes)
 
 
 ## Overview
@@ -185,6 +186,10 @@ ___
 **Beverages & Condiments**
 
 ![UML Class Diagram: Beverages & Condiments](docs/images/class-diagram-beverages-condiments.png "UML Class Diagram: Beverages & Condiments") 
+
+### API Documentation
+
+* [Beverage Machine Javadocs](https://christophercanfield.github.io/beverage-machine-simulation/apidocs/)
 
 ### Design Patterns
 
