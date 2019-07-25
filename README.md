@@ -13,7 +13,9 @@ We have a seen a number of excellent, small-scale examples so far in this course
 
 However, most useful programs are not small. Additionally, patterns are rarely used alone: typically, a medium-scale or larger program will use many of the design patterns that we have discussed, or will discuss in the later modules. A larger program also presents more opportunities to show the design principles that we have discussed, such as ensuring that our design is flexible, understandable, robust & reliable, and so forth. (See the module 1 section titled "Goals of Software Design" for more design goals that we work to achieve in our software.)
 
-For those reasons, I decided to take our assignment 1 specification, and create a program that is at a larger scale than what we have seen so far. I have incorporated a number of [design patterns](#Design-Patterns) that we have seen, or will soon see, as well as a few that we will only briefly touch on. 
+For those reasons, I decided to take our assignment 1 specification, and create a program that is at a larger scale than what we have seen so far. I have incorporated a number of [design patterns](#Design-Patterns) that we have seen, or will soon see, as well as a few that we will only briefly touch on.
+
+The program has approximately 2,000 lines of code (lines of code is a notoriously bad metric, but it can be used to indicate scale), is heavily documented (aside from the GuiApp graphical UI implementation, which needs more documentation), and has nearly 100% test coverage in the core packages: `edu.bu.met.cs665.bev.controller` and `edu.bu.met.cs665.bev.hardware`.
  
 
 ## Compiling & Running
@@ -106,19 +108,38 @@ beverageSpinner = new Spinner.Builder<Beverage>()
 
 * `Recipe`: Recipe uses the Builder pattern in order to introduce named parameters, and to fully separate its creation from its representation. It's useful since Recipe is immutable, like many of the classes in this program, and so it provides additional flexibility during the creation process that may be more difficult when using only constructors.  
 
-**Composite**
-> Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly. [GoF, *Design Patterns*, p 168]
-
 **Prototype**
 > Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype. [GoF, *Design Patterns*, p. 117]
 
-**Factory: Beverage.recipe()**  
-> 
+`createCondimentBuilderPrototype` in `GuiApp`: GuiApp contains two spinners that are very similar: one for milk condiments, and one for sugar condiments. Rather than duplicating much of their creation, GuiApp creates a prototypical representation using the `createCondimentBuilderPrototype` method, clones the `Spinner.Builder` prototypical instance that is returned, and then modifies each clone to be appropriate for either the milk or sugar beverage spinner. Compare this with the code for the beverageSpinner, above: by creating a prototypical instance first, and then cloning it, we've significantly reduced the amount of duplicate code that these two spinners would have had.
 
-**Command**
-> 
-  
-   
+```java
+    // Create a condimentBuilder prototype.
+    Spinner.Builder<Integer> condimentBuilder = createCondimentBuilderPrototype(resourceManager);
+
+    // Create the milk spinner.
+    milkSpinner = condimentBuilder.clone()
+        .setUpButtonRect(new Rectangle(229, 276, 31, 34))
+        .setDownButtonRect(new Rectangle(178, 276, 31, 34))
+        .setItemPosition(new Point(202, 275))
+        .build();
+
+    // Create the sugar spinner.
+    sugarSpinner = condimentBuilder.clone()
+        .setUpButtonRect(new Rectangle(229, 313, 31, 34))
+        .setDownButtonRect(new Rectangle(178, 313, 31, 34))
+        .setItemPosition(new Point(202, 310))
+        .build();
+```
+
+* In Java, the Prototype pattern is typically implemented by implementing the Cloneable interface, and overriding the clone() method, as I did for Spinner.Builder. Be careful: clone() can be difficult to implement properly, if you're not familiar with it. See Joshua Bloch, *Effective Java, Third Edition*, p. 58: "Item 13: Override `clone` judiciously."
+
+
+**Composite**
+> Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly. [GoF, *Design Patterns*, p 168]
+
+* `GuiApp`: GuiApp extends the Swing `Component` class. Like many GUI frameworks, Swing components are organized into a [scene graph](https://en.wikipedia.org/wiki/Scene_graph), which forms a tree of components.
+
 
 ### Notes
 
@@ -135,9 +156,13 @@ Main and the GUI are not currently covered by automated tests.
 getX(), getY() is perfectly fine. But it's not required. For an explanation, I'll refer you to Joshua Bloch, *Effective Java: Third Edition*, p. 291: 
 > Methods that return a non-boolean function or attribute of the object on which they're invoked are usually named with a noun, a noun phrase, or a verb phrase beginning with the verb get, for example, `size`, `hashCode`, or `getTime`. There is a vocal contingent that claims that only the third form (beginning with get) is acceptable, but there is little basis for this claim. The first two forms usually lead to more readable code ...
 
-**What are the flaws in this design and implementation?**
+**Other patterns that could be used**
 
-Beverage should probably be an interface. The Swing code is probably also not ideal, since I don't have much experience with Swing (RIP, JavaFX). Unlike the core program, which has unit tests that are approaching 100% code coverage according to EclEmma, the GUI has no automated tests, and has only been manually tested. There are probably a few design inconsistencies that should be reconciled. These are issues to address in a future release.
+The orders that are submitted to BeverageController could more fully implement the Command pattern, which would make it easier to allow the cancellation of submitted orders. 
 
+Individual non-parameterized beverages and condiments could use the Singleton pattern, since these are immutable and so are effectively clones of each other. That would potentially very slightly improve efficiency, at the cost of more complexity, so I'm not sure that would be a worthwhile change.
 
+**Flaws in the design and implementation**
+
+Beverage should probably be an interface. The Swing code is probably not ideal, since I don't have much experience with Swing (RIP, JavaFX), and the GUI was a secondary concern. Unlike the core program, which has unit tests that are approaching 100% code coverage according to EclEmma, the GUI has no automated tests, and has only been manually tested. There are probably a few design inconsistencies that should be reconciled. These are issues to address in a future release.
 
