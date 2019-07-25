@@ -17,8 +17,8 @@ import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 import org.apache.log4j.Logger;
 
 /**
- * Used to test the Hot Beverage Controller. Results are output to the logger.
- * 
+ * Automated interface used to test the Hot Beverage Controller. Results are output to the logger.
+ *
  * @author Christopher D. Canfield
  */
 public class Main implements BeverageControllerObserver {
@@ -27,45 +27,45 @@ public class Main implements BeverageControllerObserver {
 
   /**
    * A main method to run examples.
-   * 
+   *
    * @param args not used
    */
   public static void main(String[] args) {
     logger.info("Main: Welcome to the BeverageController tests.");
-    
+
     Main main = new Main();
     main.testBeverageController();
-    
+
     logger.info("Main: Exiting BeverageController tests.");
   }
-  
+
   private BeverageController controller;
   private HardwareInterface hardwareInterface;
-  
+
   /**
    * Tests the Hot Beverage Controller, and outputs the results to the logger.
    */
   public void testBeverageController() {
     logger.info("Main: Constructing the HardwareInterface");
     hardwareInterface = new MockHardwareInterface(20);
-    
+
     logger.info("Main: Constructing BeverageController");
     controller = new HotDrinkBeverageController(hardwareInterface);
     logger.info("Main: Subscribing to BeverageController's events.");
     controller.addObserver(this);
-    
+
     logger.info("");
     testBeverageOrderLatteMachiato();
-    
+
     logger.info("");
     testBeverageOrderGreenTeaMilkMilk();
-    
+
     logger.info("");
     testBeverageOrderAmericanoMilkSugar();
-    
+
     logger.info("");
     testBeverageOrderYellowTeaMilkMilkMilkMilk();
-    
+
     logger.info("");
     logger.info("Main: Waiting for remaining drinks to be made.");
     try {
@@ -78,13 +78,13 @@ public class Main implements BeverageControllerObserver {
       logger.warn("Main: Thread interrupted. Shutting down.");
     }
   }
-  
+
   private void testBeverageOrderLatteMachiato() {
     logger.info("Main: Constructing new order.");
     BeverageOrder order = new BeverageOrder(new LatteMacchiatoBeverage());
     testBeverageOrder(order);
   }
-  
+
   private void testBeverageOrderGreenTeaMilkMilk() {
     logger.info("Main: Constructing new order.");
     BeverageOrder order = new BeverageOrder(new GreenTeaBeverage());
@@ -92,7 +92,7 @@ public class Main implements BeverageControllerObserver {
     order.addCondiment(new MilkCondiment());
     testBeverageOrder(order);
   }
-  
+
   private void testBeverageOrderAmericanoMilkSugar() {
     logger.info("Main: Constructing second order.");
     BeverageOrder order = new BeverageOrder(new AmericanoBeverage());
@@ -100,7 +100,7 @@ public class Main implements BeverageControllerObserver {
     order.addCondiment(new SugarCondiment());
     testBeverageOrder(order);
   }
-  
+
   private void testBeverageOrderYellowTeaMilkMilkMilkMilk() {
     logger.info("Main: Constructing second order.");
     BeverageOrder order = new BeverageOrder(new YellowTeaBeverage());
@@ -110,7 +110,7 @@ public class Main implements BeverageControllerObserver {
     order.addCondiment(new MilkCondiment());
     testBeverageOrder(order);
   }
-  
+
   private void testBeverageOrder(BeverageOrder order) {
     logger.info("Main: BeverageController's current state is " + controller.state());
     logger.info("Main: Submitting order to BeverageController: " + order);
@@ -139,7 +139,7 @@ public class Main implements BeverageControllerObserver {
   @Override
   public void onOrderCompleted(BeverageController controller, CompletedOrder completedOrder) {
     logger.info(String.format("BeverageController reports that the drink was made at %s. Hardware "
-        + "command was %s.", completedOrder.finishedAtTime(), 
+        + "command was %s.", completedOrder.finishedAtTime(),
         completedOrder.recipe().hardwareCommand()));
   }
 
