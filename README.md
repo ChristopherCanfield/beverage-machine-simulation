@@ -5,7 +5,7 @@
 Christopher D. Canfield  
 BU MET CS 665 Group 5
 
-![Beverage Controller UI Example](doc/images/gui-execution-example.png "Beverage Controller GUI")
+![Beverage Controller UI Example](docs/images/gui-execution-example.png "Beverage Controller GUI")
 
 1. [Overview](#overview)
 2. [Compiling & Running](#compiling-&-running)
@@ -133,7 +133,7 @@ Main [INFO]: Main: Exiting BeverageController tests.
 
 **GUI**
 
-![GUI Example: Latte](doc/images/gui-example-latte.png "GUI Example: Latte")
+![GUI Example: Latte](docs/images/gui-example-latte.png "GUI Example: Latte")
 
 ```console
 $ mvn compile exec:java -Dexec.mainClass="edu.bu.met.cs665.gui.GuiApp" -Dlog4j.configuration="file:log4j.properties"
@@ -179,12 +179,12 @@ Most of the assumptions were derived from the requirements document.
 
 **Core Classes, Interfaces, and Relationships**
 
-![UML Class Diagram: Overview](doc/images/class-diagram-overview.png "UML Class Diagram: Overview")
+![UML Class Diagram: Overview](docs/images/class-diagram-overview.png "UML Class Diagram: Overview")
 
 ___
 **Beverages & Condiments**
 
-![UML Class Diagram: Beverages & Condiments](doc/images/class-diagram-beverages-condiments.png "UML Class Diagram: Beverages & Condiments") 
+![UML Class Diagram: Beverages & Condiments](docs/images/class-diagram-beverages-condiments.png "UML Class Diagram: Beverages & Condiments") 
 
 ### Design Patterns
 
