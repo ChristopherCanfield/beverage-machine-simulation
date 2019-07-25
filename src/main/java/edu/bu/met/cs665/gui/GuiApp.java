@@ -133,7 +133,7 @@ public class GuiApp extends Component implements
     }));
 
     // Type down
-    buttons.add(new Button(178, 235, 31, 34, () -> {
+    buttons.add(new Button(138, 235, 31, 34, () -> {
       logger.debug("Beverage type down clicked.");
     }));
 
@@ -185,7 +185,7 @@ public class GuiApp extends Component implements
     beverageSpinner = new Spinner.Builder<Beverage>()
         .setResourceManager(resourceManager)
         .setUpButtonRect(new Rectangle(312, 235, 31, 34))
-        .setDownButtonRect(new Rectangle(178, 235, 31, 34))
+        .setDownButtonRect(new Rectangle(138, 235, 31, 34))
         .setItemPosition(new Point(163, 238))
         .addItem(new AmericanoBeverage(), ImageId.TEXT_AMERICANO)
         .addItem(new EspressoBeverage(), ImageId.TEXT_ESPRESSO)
@@ -295,6 +295,7 @@ public class GuiApp extends Component implements
 
   @Override
   public void keyPressed(KeyEvent e) {
+    // Close the application if the escape key is pressed.
     if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
       window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
     }
