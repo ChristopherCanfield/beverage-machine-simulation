@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  * @author Christopher D. Canfield
  */
 public class GuiApp extends Component implements
-	BeverageControllerObserver,
+    BeverageControllerObserver,
     MouseListener, KeyListener, MouseMotionListener {
   private static final long serialVersionUID = 1L;
 
