@@ -8,7 +8,7 @@ BU MET CS 665 Group 5
 ![Beverage Controller UI Example](docs/images/gui-execution-example.png "Beverage Controller GUI")
 
 1. [Overview](#overview)
-2. [Compiling & Running](#compiling-&-running)
+2. [Compiling and Running](#compiling-and-running)
     1. [How to compile](#how-to-compile)
     2. [How to run the unit tests](#how-to-run-the-unit-tests)
     3. [How to run](#how-to-run)
@@ -23,16 +23,16 @@ BU MET CS 665 Group 5
 
 ## Overview
 
-We have a seen a number of excellent, small-scale examples so far in this course. That is a great way to learn the patterns, because small-scale examples allow us to more easily focus on the design, and not get lost in irrelevant details.
+We have a seen a number of [excellent, small-scale examples](https://github.com/kiat/MET-CS665/tree/master/Java) so far in this course. That is a great way to learn the patterns, because small-scale examples allow us to more easily focus on the design, and not get lost in unrelated details.
 
-However, most useful programs are not small. Additionally, patterns are rarely used alone: typically, a medium-scale or larger program will use many of the design patterns that we have discussed, or will discuss in the later modules. A larger program also presents more opportunities to show the design principles that we have discussed, such as ensuring that our design is flexible, understandable, robust & reliable, and so forth. (See the module 1 section titled "Goals of Software Design" for more design goals that we work to achieve in our software.)
+However, most useful programs are not small. Patterns are also rarely used alone: typically, a medium-scale or larger program will use many of the design patterns that we have discussed, or will discuss in the later modules (we'll show combinations of patterns toward the end of the semester). A larger program also presents more opportunities to show the design principles that we have discussed, such as ensuring that our design is flexible, understandable, robust & reliable, and so forth. (See the module 1 section titled "Goals of Software Design" for more design goals that we work to achieve in our software.)
 
-For those reasons, I decided to take our assignment 1 specification, and create a program that is at a larger scale than what we have seen so far. I have incorporated a number of [design patterns](#Design-Patterns) that we have seen, or will soon see, as well as a few that we will only briefly touch on.
+For those reasons, I decided to take our assignment 1 specification, and create a program that is at a larger scale than what we have seen so far. I have incorporated a number of [design patterns](#design-patterns) that we have seen, or will soon see, as well as a few that we will only briefly touch on.
 
-The program has approximately 2,000 lines of code (lines of code is a notoriously bad metric, but it can be used to indicate scale), is heavily documented (aside from the GuiApp graphical UI implementation, which needs more documentation), and has nearly 100% test coverage in the core packages: `edu.bu.met.cs665.bev.controller` and `edu.bu.met.cs665.bev.hardware`.
+The program has approximately 2,000 lines of code (lines of code is a notoriously bad metric, but it can be used to indicate scale), is heavily documented (aside from the GuiApp graphical UI implementation, which needs more documentation), and has nearly 100% test coverage in the non-UI packages: `edu.bu.met.cs665.bev.controller` and `edu.bu.met.cs665.bev.hardware`.
  
 
-## Compiling & Running
+## Compiling and Running
 
 Instructions on compiling and running the program using Apache Maven: 
 
