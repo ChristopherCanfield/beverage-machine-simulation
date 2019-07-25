@@ -1,7 +1,9 @@
 package edu.bu.met.cs665.gui;
 
 import static com.google.common.base.Preconditions.checkState;
+
 import edu.bu.met.cs665.gui.ResourceManager.ImageId;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;

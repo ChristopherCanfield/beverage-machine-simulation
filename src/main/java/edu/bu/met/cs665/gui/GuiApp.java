@@ -17,6 +17,7 @@ import edu.bu.met.cs665.bev.hardware.CompletedOrder;
 import edu.bu.met.cs665.bev.hardware.HardwareInterface;
 import edu.bu.met.cs665.bev.hardware.MockHardwareInterface;
 import edu.bu.met.cs665.gui.ResourceManager.ImageId;
+
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -36,9 +37,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -161,7 +164,7 @@ public class GuiApp extends Component implements
   }
 
   private void addSpinners() throws IOException {
-	// Create a condimentBuilder prototype.
+    // Create a condimentBuilder prototype.
     Spinner.Builder<Integer> condimentBuilder = createCondimentBuilderPrototype(resourceManager);
 
     // Create the milk spinner.
