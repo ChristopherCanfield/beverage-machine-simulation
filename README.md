@@ -101,13 +101,13 @@ Main [INFO]: Main: Submitting order to BeverageController: Green Tea with Milk, 
 Main [INFO]: BeverageController received an order: Green Tea with Milk, Milk
 Main [INFO]: BeverageController's state changed: MAKING_DRINK
 Main [INFO]:
-Main [INFO]: Main: Constructing second order.
+Main [INFO]: Main: Constructing new order.
 Main [INFO]: Main: BeverageController's current state is MAKING_DRINK
 Main [INFO]: Main: Submitting order to BeverageController: Americano with Milk, Sugar
 Main [INFO]: BeverageController received an order: Americano with Milk, Sugar
 Main [INFO]: BeverageController's state changed: MAKING_DRINK
 Main [INFO]:
-Main [INFO]: Main: Constructing second order.
+Main [INFO]: Main: Constructing new order.
 Main [INFO]: Main: BeverageController's current state is MAKING_DRINK
 Main [INFO]: Main: Submitting order to BeverageController: Yellow Tea with Milk, Milk, Milk, Milk
 Main [INFO]: BeverageController received an order: Yellow Tea with Milk, Milk, Milk, Milk

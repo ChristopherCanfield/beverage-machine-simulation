@@ -94,7 +94,7 @@ public class Main implements BeverageControllerObserver {
   }
 
   private void testBeverageOrderAmericanoMilkSugar() {
-    logger.info("Main: Constructing second order.");
+    logger.info("Main: Constructing new order.");
     BeverageOrder order = new BeverageOrder(new AmericanoBeverage());
     order.addCondiment(new MilkCondiment());
     order.addCondiment(new SugarCondiment());
@@ -102,7 +102,7 @@ public class Main implements BeverageControllerObserver {
   }
 
   private void testBeverageOrderYellowTeaMilkMilkMilkMilk() {
-    logger.info("Main: Constructing second order.");
+    logger.info("Main: Constructing new order.");
     BeverageOrder order = new BeverageOrder(new YellowTeaBeverage());
     order.addCondiment(new MilkCondiment());
     order.addCondiment(new MilkCondiment());
